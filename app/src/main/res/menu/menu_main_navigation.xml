@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_favourites"
+        android:icon="@drawable/ic_heart_full"
+        android:title="Favourites" />
+
+    <item
+        android:id="@+id/nav_create"
+        android:icon="@drawable/ic_drink"
+        android:title="Create recipe" />
+
+    <item
+        android:id="@+id/nav_pantry"
+        android:icon="@drawable/ic_pantry_temp"
+        android:title="Pantry" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile" />
+
+</menu>

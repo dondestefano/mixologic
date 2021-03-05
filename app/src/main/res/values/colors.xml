@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <!-- Mixologix main colors. -->
+    <color name="salmon">#FF7777</color>
+    <color name="mango">#FFA34D</color>
+    <color name="turquoise">#1EB2A6</color>
+
 </resources>
