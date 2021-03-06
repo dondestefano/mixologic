@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Mixologic</string>
+
+    <!-- Titles -->
+    <string name="liquors">Liquors</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="preparation">Preparation</string>
+
+    <!-- Prompts -->
+    <string name="enter_drink_name">Drink name...</string>
+    <string name="enter_instructions">Instructions...</string>
+    <string name="submit">Submit</string>
+
+
 </resources>
