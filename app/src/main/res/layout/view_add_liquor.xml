@@ -16,6 +16,7 @@
         android:text="Vodka - 4 cl"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="14sp"
+        android:layout_weight="1"
         android:layout_marginEnd="8dp" />
 
     <ImageView

@@ -35,7 +35,7 @@ class CreateFragment : Fragment() {
 
     private fun initRecyclerViews() {
         ingredientRecyclerView = view?.findViewById(R.id.ingredientsRecyclerView)
-        ingredientRecyclerView?.layoutManager = GridLayoutManager(ingredientRecyclerView?.context, 4, GridLayoutManager.HORIZONTAL, false)
+        ingredientRecyclerView?.layoutManager = GridLayoutManager(ingredientRecyclerView?.context, 3, GridLayoutManager.HORIZONTAL, false)
         ingredientAdapter = CreateAdapter(false)
         ingredientRecyclerView?.adapter = ingredientAdapter
 
@@ -44,8 +44,6 @@ class CreateFragment : Fragment() {
         liquorAdapter = CreateAdapter(true)
         liquorRecyclerView?.adapter = liquorAdapter
 
-        liquorAdapter.addDummyData()
-        liquorAdapter.addDummyData()
         liquorAdapter.addDummyData()
         ingredientAdapter.addDummyData()
     }
