@@ -5,11 +5,19 @@
     <string name="liquors">Liquors</string>
     <string name="ingredients">Ingredients</string>
     <string name="preparation">Preparation</string>
+    <string name="unit">Unit</string>
 
     <!-- Prompts -->
     <string name="enter_drink_name">Drink name...</string>
     <string name="enter_instructions">Instructions...</string>
-    <string name="submit">Submit</string>
+    <string name="add_liquor">Add liquor</string>
+    <string name="add_ingredient">Add ingredient</string>
+    <string name="set_ingredient">Ingredient...</string>
+    <string name="set_amount">Amount...</string>
 
+    <!-- Buttons -->
+    <string name="submit">Submit</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

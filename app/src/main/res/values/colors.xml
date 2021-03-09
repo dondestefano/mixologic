@@ -14,4 +14,7 @@
     <color name="mango">#FFA34D</color>
     <color name="turquoise">#1EB2A6</color>
 
+
+    <color name="colorGrayTransparent">#99999999</color>
+
 </resources>

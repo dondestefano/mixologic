@@ -33,9 +33,9 @@ class CreateAdapter(isLiquorAdapter: Boolean) : RecyclerView.Adapter<RecyclerVie
     override fun getItemCount() = contents.size
 
     fun addDummyData() {
-        val vodka = Ingredient("Vodka", 1)
-        val sprite = Ingredient("Sprite", 2)
-        val cucumber = Ingredient("Cucumber", 3)
+        val vodka = Ingredient("Vodka", 1, "ml")
+        val sprite = Ingredient("Sprite", 2, "ml")
+        val cucumber = Ingredient("Cucumber", 3, "ml")
 
         contents.addAll(listOf(vodka, sprite, cucumber))
     }
@@ -46,7 +46,7 @@ class CreateAdapter(isLiquorAdapter: Boolean) : RecyclerView.Adapter<RecyclerVie
         private val removeButton = view.findViewById<ImageView>(R.id.removeIngredientButton)
 
         fun bind(ingredient: Ingredient) {
-            text.text = "${ingredient.name} - ${ingredient.amount}"
+            text.text = "${ingredient.name} - ${ingredient.amount} ${ingredient.unit}"
             removeButton.setOnClickListener{
                 contents.remove(contents[adapterPosition])
                 notifyDataSetChanged()
