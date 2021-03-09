@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.Ingredient
 
-class CreateAdapter(isLiquorAdapter: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CreateAdapter(private val isLiquorAdapter: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var contents = mutableListOf<Ingredient>()
-    private val isLiquorAdapter = isLiquorAdapter
-
     var onClickListener: (Ingredient?) -> Unit = {}
 
 
@@ -32,14 +30,13 @@ class CreateAdapter(isLiquorAdapter: Boolean) : RecyclerView.Adapter<RecyclerVie
 
     override fun getItemCount() = contents.size
 
-    fun addDummyData() {
-        val vodka = Ingredient("Vodka", 1, "ml")
-        val sprite = Ingredient("Sprite", 2, "ml")
-        val cucumber = Ingredient("Cucumber", 3, "ml")
-
-        contents.addAll(listOf(vodka, sprite, cucumber))
+    fun addIngredient(ingredient: Ingredient) {
+        contents.add(ingredient)
     }
 
+    fun getIngredients(): List<Ingredient>{
+        return contents
+    }
 
     inner class AddIngredientViewHolder(private var view: View): RecyclerView.ViewHolder(view) {
         private val text = view.findViewById<TextView>(R.id.ingredientTextView)
