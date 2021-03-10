@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.Ingredient
 import com.example.mixologic.data.Recipe
+import java.util.*
 
 const val LIQUOR_KEY = "LIQUOR_KEY"
 const val INGREDIENT_KEY = "INGREDIENT_KEY"
@@ -60,7 +61,7 @@ class CreateFragment : Fragment() {
         }
 
         submitButton.setOnClickListener() {
-            createRecipe()
+            createViewModel.saveRecipe(createRecipe())
         }
     }
 
@@ -76,15 +77,15 @@ class CreateFragment : Fragment() {
         liquorRecyclerView?.adapter = liquorAdapter
     }
 
-    private fun createRecipe() {
+    private fun createRecipe(): Recipe {
         val recipe = Recipe(
                 drinkNameEditText.text.toString(),
                 drinkInstructionsEditText.text.toString(),
                 liquorAdapter.getIngredients(),
-                ingredientAdapter.getIngredients()
+                ingredientAdapter.getIngredients(),
+                UUID.randomUUID().toString()
         )
-
-        Log.d("!!!", recipe.toString())
+        return recipe
     }
 
     private fun showPopUp(type: String) {
