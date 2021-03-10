@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
@@ -16,6 +17,8 @@ const val LIQUOR_KEY = "LIQUOR_KEY"
 const val INGREDIENT_KEY = "INGREDIENT_KEY"
 
 class CreateFragment : Fragment() {
+    private val createViewModel: CreateViewModel by viewModels()
+
     private lateinit var liquorAdapter: CreateAdapter
     private lateinit var ingredientAdapter: CreateAdapter
 
@@ -96,20 +99,28 @@ class CreateFragment : Fragment() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
         )
+        popupWindow.isFocusable = true
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            popupWindow.elevation = 10.0F
+        }
+
+        // Setup UI
         val unitSpinner = view.findViewById(R.id.unitSpinner) as Spinner
         val unitEditText = view.findViewById(R.id.unitEditText) as EditText
         val cancelButton = view.findViewById(R.id.cancelButton) as Button
         val addButton = view.findViewById(R.id.addButton) as Button
 
-        val unit = listOf("ml", "cl", "dl", "st")
-        unitSpinner.adapter = activity?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, unit) }
+        unitSpinner.adapter = activity?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, createViewModel.unit) }
 
+        cancelButton.setOnClickListener {
+            popupWindow.dismiss()
+        }
+
+        //Setup type-specific UI
         if (type == LIQUOR_KEY) {
-            val liquor = listOf("Vodka", "Rum", "Gin", "Whiskey")
-
             val liquorSpinner = view.findViewById(R.id.liquorSpinner) as Spinner
-            liquorSpinner.adapter = activity?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, liquor) }
+            liquorSpinner.adapter = activity?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, createViewModel.liquor) }
 
             addButton.setOnClickListener{
                 val liquor = Ingredient(
@@ -134,16 +145,6 @@ class CreateFragment : Fragment() {
                 popupWindow.dismiss()
                 clearAllFocus()
             }
-        }
-
-        cancelButton.setOnClickListener {
-            popupWindow.dismiss()
-        }
-
-        popupWindow.isFocusable = true
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            popupWindow.elevation = 10.0F
         }
 
         popupWindow.showAtLocation(
