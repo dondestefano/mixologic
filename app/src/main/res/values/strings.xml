@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">Mixologic</string>
+
+    <!-- Titles -->
+    <string name="liquors">Liquors</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="preparation">Preparation</string>
+    <string name="unit">Unit</string>
+
+    <!-- Prompts -->
+    <string name="enter_drink_name">Drink name...</string>
+    <string name="enter_instructions">Instructions...</string>
+    <string name="add_liquor">Add liquor</string>
+    <string name="add_ingredient">Add ingredient</string>
+    <string name="set_ingredient">Ingredient...</string>
+    <string name="set_amount">Amount...</string>
+
+    <!-- Buttons -->
+    <string name="submit">Submit</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Login -->
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="password">Password</string>
+    <string name="email">E-mail</string>
+    <string name="username">Username</string>
+
 </resources>
