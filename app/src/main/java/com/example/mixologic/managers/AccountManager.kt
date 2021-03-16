@@ -9,21 +9,14 @@ object AccountManager {
     private val auth = FirebaseAuth.getInstance()
     private lateinit var user: FirebaseUser
 
-    fun login(email: String, password: String, context: Context) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    auth.currentUser.let {
-                        user = it
-                    }
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Please enter your e-mail and password.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+    fun getAuth(): FirebaseAuth {
+        return auth
+    }
+
+    fun setUser() {
+        auth.currentUser.let {
+            user = it!!
+        }
     }
 
     fun signUp(email: String, password: String, context: Context) {
@@ -32,7 +25,6 @@ object AccountManager {
                 if (task.isSuccessful) {
                     Toast.makeText(context, "User signed up.", Toast.LENGTH_SHORT)
                         .show()
-                    login(email, password, context)
                 } else {
                     Toast.makeText(context, "E-mail or username already taken.", Toast.LENGTH_SHORT)
                         .show()

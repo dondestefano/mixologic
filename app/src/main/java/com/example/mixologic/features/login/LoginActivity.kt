@@ -6,10 +6,15 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.mixologic.R
-import com.example.mixologic.managers.AccountManager
+import com.example.mixologic.features.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
+    private val loginViewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -19,21 +24,49 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.loginButton)
         val signupButton = findViewById<TextView>(R.id.signupTextView)
 
+        observeViewModel()
+
         signupButton.setOnClickListener{
-            goToSignup()
+            startSignupActivity()
         }
 
         loginButton.setOnClickListener{
-            AccountManager.login(
+            loginViewModel.login(
                     emailEditText.text.toString(),
                     passwordEditText.text.toString(),
-            this
             )
         }
     }
 
-    private fun goToSignup() {
+    private fun observeViewModel() {
+        loginViewModel.loginState.observe(this, Observer {
+            when (it) {
+                LoginState.SUCCESS -> {
+                    finish()
+                    startMainActivity()
+                }
+
+                LoginState.ERROR -> {
+                    Toast.makeText(
+                            this,
+                            "Please enter your e-mail and password.",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                else -> {}
+            }
+        })
+    }
+
+    private fun startSignupActivity() {
         val intent = Intent(this, SignupActivity::class.java)
         startActivity(intent)
     }
+
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
 }
