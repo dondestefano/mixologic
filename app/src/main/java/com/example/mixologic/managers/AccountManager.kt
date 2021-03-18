@@ -19,6 +19,10 @@ object AccountManager {
         }
     }
 
+    fun getUser(): FirebaseUser {
+        return user
+    }
+
     fun signUp(email: String, password: String, context: Context) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->

@@ -9,4 +9,14 @@ object FirebaseManager {
     fun getRecipeDatabase(): CollectionReference {
         return database.collection("recipes")
     }
+
+    fun getUserDatabase(): CollectionReference {
+        return database.collection("users")
+    }
+
+    fun getUsersRecipes(): CollectionReference {
+        return getUserDatabase()
+                .document(AccountManager.getUser().uid)
+                .collection("recipes")
+    }
 }
