@@ -32,6 +32,7 @@ class CreateAdapter(private val isLiquorAdapter: Boolean) : RecyclerView.Adapter
 
     fun addIngredient(ingredient: Ingredient) {
         contents.add(ingredient)
+        notifyDataSetChanged()
     }
 
     fun getIngredients(): List<Ingredient>{

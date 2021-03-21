@@ -20,6 +20,7 @@ class SplashActivity : AppCompatActivity() {
             finish()
         } else {
             AccountManager.setUser()
+            AccountManager.setUserData(this)
             startActivity(loggedInIntent)
             finish()
         }
