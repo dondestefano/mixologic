@@ -22,16 +22,8 @@ object AccountManager {
         }
     }
 
-    fun setUserData(context: Context) {
-        FirebaseManager.getUsersUserData(user.uid).document("info")
-            .addSnapshotListener { value, error ->
-            if (value != null) {
-                    userData = value.toObject(UserData::class.java)!!
-            } else {
-                Toast.makeText(context, "Error fetching userdata: $error", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
+    fun setUserData(data: UserData) {
+        userData = data
     }
 
     fun getUser(): FirebaseUser {
