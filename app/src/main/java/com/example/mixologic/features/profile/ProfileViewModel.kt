@@ -3,16 +3,11 @@ package com.example.mixologic.features.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mixologic.data.Recipe
+import com.example.mixologic.data.RecipeState
 import com.example.mixologic.data.UserData
 import com.example.mixologic.features.login.LoginState
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.FirebaseManager
-
-enum class RecipeState {
-    ERROR,
-    LOADING,
-    SUCCESS
-}
 
 class ProfileViewModel: ViewModel() {
     var userRecipes = listOf<Recipe>()
