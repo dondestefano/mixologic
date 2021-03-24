@@ -41,18 +41,20 @@ fun appendIngredientsFromList(view: TextView, list: List<Ingredient>, liquor: Bo
 }
 
 @BindingAdapter("getUserName")
-fun getUserName(view: TextView, id: String) {
-    if (id == AccountManager.getUser().uid) {
-        view.text = AccountManager.getUsername()
-    } else {
-        FirebaseManager.getUsersUserData(id)
-            .document("info")
-            .addSnapshotListener { value, error ->
-                if (value != null) {
-                    val userData = value.toObject(UserData::class.java)!!
-                    view.text = userData.name
-                }
-            }
+fun getUserName(view: TextView, id: String?) {
+    if (id != null) {
+        if (id == AccountManager.getUser().uid) {
+            view.text = AccountManager.getUsername()
+        } else {
+            FirebaseManager.getUsersUserData(id)
+                    .document("info")
+                    .addSnapshotListener { value, error ->
+                        if (value != null) {
+                            val userData = value.toObject(UserData::class.java)!!
+                            view.text = userData.name
+                        }
+                    }
+        }
     }
 
 }
