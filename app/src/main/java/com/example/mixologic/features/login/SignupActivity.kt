@@ -20,6 +20,7 @@ class SignupActivity : AppCompatActivity() {
 
         signupButton.setOnClickListener{
             AccountManager.signUp(
+                    usernameEditText.text.toString(),
                     emailEditText.text.toString(),
                     passwordEditText.text.toString(),
                     this

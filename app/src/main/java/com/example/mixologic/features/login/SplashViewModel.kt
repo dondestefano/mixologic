@@ -8,38 +8,29 @@ import com.example.mixologic.data.UserData
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.FirebaseManager
 
-enum class LoginState {
+enum class FetchState {
     ERROR,
+    LOADING,
     SUCCESS
 }
 
-class LoginViewModel: ViewModel() {
-    val loginState = MutableLiveData<LoginState>()
+class SplashViewModel: ViewModel() {
+    val fetchState = MutableLiveData<FetchState>()
 
-    fun login(email: String, password: String, context: Context) {
-        AccountManager.getAuth().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        AccountManager.setUser()
-                        fetchUserData(context)
-                    } else {
-                        loginState.value = LoginState.ERROR
-                    }
-                }
-    }
-
-    private fun fetchUserData(context: Context) {
+    fun fetchUserData(context: Context) {
+        fetchState.value = FetchState.LOADING
         FirebaseManager.getUsersUserData(AccountManager.getUser().uid).document("info")
             .addSnapshotListener { value, error ->
                 if (value != null) {
                     val data = value.toObject(UserData::class.java)!!
                     AccountManager.setUserData(data)
-                    loginState.value = LoginState.SUCCESS
+                    fetchState.value = FetchState.SUCCESS
                 } else {
                     Toast.makeText(context, "Error fetching userdata: $error", Toast.LENGTH_SHORT)
                         .show()
-                    loginState.value = LoginState.ERROR
+                    fetchState.value = FetchState.ERROR
                 }
             }
     }
+
 }

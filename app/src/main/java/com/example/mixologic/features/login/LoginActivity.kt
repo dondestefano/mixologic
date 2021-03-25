@@ -34,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
             loginViewModel.login(
                     emailEditText.text.toString(),
                     passwordEditText.text.toString(),
+                this
             )
         }
     }

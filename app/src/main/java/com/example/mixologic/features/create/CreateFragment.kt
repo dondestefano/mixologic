@@ -2,7 +2,6 @@ package com.example.mixologic.features.create
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
@@ -78,14 +77,16 @@ class CreateFragment : Fragment() {
     }
 
     private fun createRecipe(): Recipe {
-        val recipe = Recipe(
-                drinkNameEditText.text.toString(),
-                drinkInstructionsEditText.text.toString(),
-                liquorAdapter.getIngredients(),
-                ingredientAdapter.getIngredients(),
-                UUID.randomUUID().toString()
+
+        return Recipe(
+            drinkNameEditText.text.toString(),
+            drinkInstructionsEditText.text.toString(),
+            liquorAdapter.getIngredients(),
+            ingredientAdapter.getIngredients(),
+            UUID.randomUUID().toString(),
+            com.example.mixologic.managers.AccountManager.getUser().uid,
+            ""
         )
-        return recipe
     }
 
     private fun showPopUp(type: String) {
