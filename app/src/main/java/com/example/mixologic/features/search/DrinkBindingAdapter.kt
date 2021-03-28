@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.example.mixologic.data.Ingredient
+import com.example.mixologic.data.Recipe
 import com.example.mixologic.data.UserData
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.FirebaseManager
@@ -56,5 +57,13 @@ fun getUserName(view: TextView, id: String?) {
                     }
         }
     }
+}
 
+@BindingAdapter("getLikes")
+fun getLikes(view: TextView, recipe: Recipe) {
+    if (recipe.likes.isNullOrEmpty()) {
+        view.text = "0"
+    } else {
+        view.text = recipe.likes!!.size.toString()
+    }
 }
