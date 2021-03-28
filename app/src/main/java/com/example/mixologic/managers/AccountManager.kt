@@ -3,11 +3,14 @@ package com.example.mixologic.managers
 import com.example.mixologic.data.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.auth.User
 
 object AccountManager {
     private val auth = FirebaseAuth.getInstance()
     private lateinit var user: FirebaseUser
     private lateinit var userData: UserData
+
+    private val defaultData = UserData("Error fetching data")
 
     fun getAuth(): FirebaseAuth {
         return auth
@@ -39,5 +42,9 @@ object AccountManager {
         FirebaseManager.getUsersUserData(user.uid)
                 .document("info")
                 .set(userData)
+    }
+
+    fun getDefaultData(): UserData {
+        return defaultData
     }
 }

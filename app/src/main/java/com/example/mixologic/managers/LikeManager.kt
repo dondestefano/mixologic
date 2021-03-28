@@ -17,7 +17,6 @@ object LikeManager {
                 }
             }
         }
-
     }
 
     private fun likeRecipe(recipe: Recipe, userId: String) {

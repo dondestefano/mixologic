@@ -54,10 +54,9 @@ fun getUserName(view: TextView, id: String?) {
                     .document("info")
                     .addSnapshotListener { value, error ->
                         if (value != null) {
-                            val userData = value.toObject(UserData::class.java)!!
+                            val userData = value.toObject(UserData::class.java) ?: AccountManager.getDefaultData()
                             view.text = userData.name
                         }
-                    }
         }
     }
 }
