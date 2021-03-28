@@ -16,13 +16,14 @@ enum class FetchState {
 
 class SplashViewModel: ViewModel() {
     val fetchState = MutableLiveData<FetchState>()
+    private val defaultData = UserData("Error fetching data")
 
     fun fetchUserData(context: Context) {
         fetchState.value = FetchState.LOADING
         FirebaseManager.getUsersUserData(AccountManager.getUser().uid).document("info")
             .addSnapshotListener { value, error ->
                 if (value != null) {
-                    val data = value.toObject(UserData::class.java)!!
+                    val data = value.toObject(UserData::class.java) ?: defaultData
                     AccountManager.setUserData(data)
                     fetchState.value = FetchState.SUCCESS
                 } else {
