@@ -1,6 +1,7 @@
 package com.example.mixologic.managers
 
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 object FirebaseManager {
@@ -8,6 +9,10 @@ object FirebaseManager {
 
     fun getRecipeDatabase(): CollectionReference {
         return database.collection("recipes")
+    }
+
+    fun getRecipe(recipeId: String): DocumentReference {
+        return getRecipeDatabase().document(recipeId)
     }
 
     fun getUserDatabase(): CollectionReference {

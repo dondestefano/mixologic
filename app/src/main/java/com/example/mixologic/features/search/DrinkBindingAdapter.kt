@@ -4,12 +4,15 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.example.mixologic.R
 import com.example.mixologic.data.Ingredient
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.data.UserData
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.FirebaseManager
+import com.example.mixologic.managers.LikeManager
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("imageFromUrl")
@@ -65,5 +68,25 @@ fun getLikes(view: TextView, recipe: Recipe) {
         view.text = recipe.likes!!.size.toString()
     } else {
         view.text = "0"
+    }
+}
+
+@BindingAdapter("likeStatus")
+fun likeStatus(view: ImageView, recipe: Recipe) {
+    if (recipe.likes.isNullOrEmpty()) {
+        val notLikedIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_heart_outline)
+        view.setImageDrawable(notLikedIcon)
+    }
+
+    else {
+        recipe.likes?.let { it ->
+            if (LikeManager.hasUserLiked(it, AccountManager.getUser().uid)) {
+                val likedIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_heart_full)
+                view.setImageDrawable(likedIcon)
+            } else {
+                val notLikedIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_heart_outline)
+                view.setImageDrawable(notLikedIcon)
+            }
+        }
     }
 }
