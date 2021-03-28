@@ -61,9 +61,9 @@ fun getUserName(view: TextView, id: String?) {
 
 @BindingAdapter("getLikes")
 fun getLikes(view: TextView, recipe: Recipe) {
-    if (recipe.likes.isNullOrEmpty()) {
-        view.text = "0"
-    } else {
+    if (!recipe.likes.isNullOrEmpty()) {
         view.text = recipe.likes!!.size.toString()
+    } else {
+        view.text = "0"
     }
 }
