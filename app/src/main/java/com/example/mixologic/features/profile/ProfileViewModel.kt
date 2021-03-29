@@ -16,13 +16,15 @@ class ProfileViewModel: ViewModel() {
 
     fun fetchUsersRecipes() {
         recipeState.value = RecipeState.LOADING
-        FirebaseManager.getUsersRecipes().addSnapshotListener{value, error ->
-            if (value != null) {
-                val recipes = value.toObjects(Recipe::class.java)
-                userRecipes = recipes
-                recipeState.value = RecipeState.SUCCESS
-            } else {
-                recipeState.value = RecipeState.ERROR
+        FirebaseManager
+                .getUsersRecipes(AccountManager.getUser().uid)
+                .addSnapshotListener { value, error ->
+                    if (value != null) {
+                        val recipes = value.toObjects(Recipe::class.java)
+                        userRecipes = recipes
+                        recipeState.value = RecipeState.SUCCESS
+                    } else {
+                        recipeState.value = RecipeState.ERROR
             }
         }
     }
