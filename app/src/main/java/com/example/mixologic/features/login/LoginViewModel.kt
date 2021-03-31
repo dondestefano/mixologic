@@ -23,6 +23,7 @@ class LoginViewModel: ViewModel() {
                         AccountManager.setUser()
                         fetchUserData(context)
                     } else {
+                        task.exception
                         loginState.value = LoginState.ERROR
                     }
                 }

@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.databinding.ViewDrinkListBinding
+import com.example.mixologic.managers.AccountManager
+import com.example.mixologic.managers.LikeManager
 
 class DrinkAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var recipes = listOf<Recipe>()
@@ -38,6 +40,10 @@ class DrinkAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.apply {
                 recipe = recipeItem
                 executePendingBindings()
+            }
+
+            binding.likeButton.setOnClickListener{
+                LikeManager.handleOnLiked(recipeItem, AccountManager.getUser().uid)
             }
         }
     }

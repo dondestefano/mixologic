@@ -22,7 +22,7 @@ class SplashViewModel: ViewModel() {
         FirebaseManager.getUsersUserData(AccountManager.getUser().uid).document("info")
             .addSnapshotListener { value, error ->
                 if (value != null) {
-                    val data = value.toObject(UserData::class.java)!!
+                    val data = value.toObject(UserData::class.java) ?: AccountManager.getDefaultData()
                     AccountManager.setUserData(data)
                     fetchState.value = FetchState.SUCCESS
                 } else {

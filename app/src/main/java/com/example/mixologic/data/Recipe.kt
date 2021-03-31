@@ -8,4 +8,4 @@ data class Recipe (
         val id: String? = null,
         val creatorId: String? = null,
         val imageURL: String? = null,
-)
+        var likes: List<Like>? = null )

@@ -1,13 +1,20 @@
 package com.example.mixologic.managers
 
+import com.example.mixologic.data.Like
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 object FirebaseManager {
     private val database = FirebaseFirestore.getInstance()
 
     fun getRecipeDatabase(): CollectionReference {
         return database.collection("recipes")
+    }
+
+    fun getRecipe(recipeId: String): DocumentReference {
+        return getRecipeDatabase().document(recipeId)
     }
 
     fun getUserDatabase(): CollectionReference {
@@ -20,9 +27,11 @@ object FirebaseManager {
                 .collection("userData")
     }
 
-    fun getUsersRecipes(): CollectionReference {
-        return getUserDatabase()
-                .document(AccountManager.getUser().uid)
-                .collection("recipes")
+    fun getUsersRecipes(userId: String): Query {
+        return getRecipeDatabase().whereEqualTo("creatorId", userId)
+    }
+
+    fun getLikedRecipes(): Query {
+        return getRecipeDatabase().whereArrayContains("likes", Like(AccountManager.getUser().uid))
     }
 }

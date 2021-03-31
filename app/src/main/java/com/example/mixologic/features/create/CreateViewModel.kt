@@ -19,15 +19,6 @@ class CreateViewModel(): ViewModel() {
                 .addOnFailureListener {
                     Log.d("!!!", "Failed to add recipe to database")
                 }
-
-            FirebaseManager.getUsersRecipes().document(recipe.id)
-                    .set(recipe)
-                    .addOnSuccessListener {
-                        Log.d("!!!", "Recipe successfully added to users collection")
-                    }
-                    .addOnFailureListener {
-                        Log.d("!!!", "Failed to add recipe to users collection")
-                    }
         }
     }
 }
