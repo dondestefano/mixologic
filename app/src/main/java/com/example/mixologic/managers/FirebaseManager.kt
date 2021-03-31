@@ -31,6 +31,10 @@ object FirebaseManager {
         return getRecipeDatabase().whereEqualTo("creatorId", userId)
     }
 
+    fun getLiquorDatabase(): CollectionReference {
+        return database.collection("liquors")
+    }
+
     fun getLikedRecipes(): Query {
         return getRecipeDatabase().whereArrayContains("likes", Like(AccountManager.getUser().uid))
     }

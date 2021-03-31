@@ -4,9 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.managers.FirebaseManager
+import com.example.mixologic.managers.LiquorManager
 
 class CreateViewModel(): ViewModel() {
-    val liquor = listOf("Vodka", "Rum", "Gin", "Whiskey")
+    val liquor = LiquorManager.getLiquors()
     val unit = listOf("ml", "cl", "dl", "st")
 
     fun saveRecipe(recipe: Recipe) {
