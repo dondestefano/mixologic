@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
-import com.example.mixologic.data.RecipeState
+import com.example.mixologic.data.FetchState
 
 class SearchFragment : Fragment() {
     private val searchViewModel: SearchViewModel by viewModels()
@@ -48,7 +48,7 @@ class SearchFragment : Fragment() {
     private fun observeViewModel() {
         searchViewModel.recipeState.observe(viewLifecycleOwner, Observer {
             when (it) {
-                RecipeState.SUCCESS -> {
+                FetchState.SUCCESS -> {
                     drinkAdapter.updateItemsToList(searchViewModel.recipes)
                 }
             }

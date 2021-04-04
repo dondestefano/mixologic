@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
-import com.example.mixologic.data.RecipeState
+import com.example.mixologic.data.FetchState
 import com.example.mixologic.features.search.DrinkAdapter
 
 class ProfileFragment : Fragment() {
@@ -57,7 +57,7 @@ class ProfileFragment : Fragment() {
     private fun observeViewModel() {
         profileViewModel.recipeState.observe(viewLifecycleOwner, Observer {
             when (it) {
-                RecipeState.SUCCESS -> {
+                FetchState.SUCCESS -> {
                     drinkAdapter.updateItemsToList(profileViewModel.userRecipes)
                 }
             }
