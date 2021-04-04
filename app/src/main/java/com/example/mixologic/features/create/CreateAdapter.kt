@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.Ingredient
+import com.example.mixologic.data.Recipe
 
 class CreateAdapter(private val isLiquorAdapter: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var contents = mutableListOf<Ingredient>()
     var onClickListener: (Ingredient?) -> Unit = {}
+    var onDeleteListener: (Ingredient?) -> Unit = {}
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -35,6 +37,12 @@ class CreateAdapter(private val isLiquorAdapter: Boolean) : RecyclerView.Adapter
         notifyDataSetChanged()
     }
 
+    fun updateItemsToList(list : List<Ingredient>) {
+        contents.clear()
+        contents.addAll(list)
+        notifyDataSetChanged()
+    }
+
     fun getIngredients(): List<Ingredient>{
         return contents
     }
@@ -46,6 +54,7 @@ class CreateAdapter(private val isLiquorAdapter: Boolean) : RecyclerView.Adapter
         fun bind(ingredient: Ingredient) {
             text.text = "${ingredient.name} - ${ingredient.amount} ${ingredient.unit}"
             removeButton.setOnClickListener{
+                onDeleteListener(contents[adapterPosition])
                 contents.remove(contents[adapterPosition])
                 notifyDataSetChanged()
             }

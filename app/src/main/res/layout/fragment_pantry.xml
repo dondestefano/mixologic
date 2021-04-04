@@ -36,7 +36,7 @@
             app:layout_constraintTop_toBottomOf="@+id/titleDivider"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <include layout="@layout/content_favourite"/>
+            <include layout="@layout/content_pantry"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
