@@ -4,6 +4,7 @@ import com.example.mixologic.data.Ingredient
 
 object LiquorManager {
     private var liquors = mutableListOf<String>()
+    private var units = listOf("ml", "cl", "dl", "st")
 
     fun fetchLiquors() {
         liquors.clear()
@@ -19,5 +20,9 @@ object LiquorManager {
 
     fun getLiquors(): List<String> {
         return liquors
+    }
+
+    fun getUnits(): List<String> {
+        return units
     }
 }
