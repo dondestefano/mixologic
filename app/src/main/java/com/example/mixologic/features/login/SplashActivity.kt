@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import com.example.mixologic.R
 import com.example.mixologic.features.main.MainActivity
 import com.example.mixologic.managers.AccountManager
-import com.google.firebase.auth.FirebaseAuth
+import com.example.mixologic.managers.LiquorManager
 
 class SplashActivity : AppCompatActivity() {
     private val splashViewModel: SplashViewModel by viewModels()
@@ -23,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
         notLoggedInIntent = Intent(this, LoginActivity::class.java)
 
         observeViewModel()
+        LiquorManager.fetchLiquors()
 
         if (AccountManager.getAuth().currentUser == null) {
             startActivity(notLoggedInIntent)

@@ -27,8 +27,18 @@ object FirebaseManager {
                 .collection("userData")
     }
 
+    fun getUserPantry(uid: String): CollectionReference {
+        return getUserDatabase()
+            .document(uid)
+            .collection("pantry")
+    }
+
     fun getUsersRecipes(userId: String): Query {
         return getRecipeDatabase().whereEqualTo("creatorId", userId)
+    }
+
+    fun getLiquorDatabase(): CollectionReference {
+        return database.collection("liquors")
     }
 
     fun getLikedRecipes(): Query {

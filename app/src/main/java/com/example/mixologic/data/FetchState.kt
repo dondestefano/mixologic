@@ -1,6 +1,6 @@
 package com.example.mixologic.data
 
-enum class RecipeState {
+enum class FetchState {
     ERROR,
     LOADING,
     SUCCESS

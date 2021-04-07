@@ -7,6 +7,9 @@
     <string name="preparation">Preparation</string>
     <string name="unit">Unit</string>
     <string name="my_recipes">My recipes</string>
+    <string name="create_drink">Create drink</string>
+    <string name="favourites">Favourites</string>
+    <string name="pantry">Pantry</string>
 
     <!-- Prompts -->
     <string name="enter_drink_name">Drink name...</string>

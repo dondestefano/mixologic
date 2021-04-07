@@ -14,7 +14,7 @@
             android:id="@+id/createTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create drink"
+            android:text="@string/create_drink"
             android:textSize="25sp"
             android:textColor="@color/mango"
             app:layout_constraintTop_toTopOf="parent"
