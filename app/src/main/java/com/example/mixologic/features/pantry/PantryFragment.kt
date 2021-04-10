@@ -23,7 +23,7 @@ class PantryFragment : Fragment() {
     private val pantryViewModel: PantryViewModel by viewModels()
 
     private lateinit var pantryAdapter: CreateAdapter
-    private lateinit var addIngredientActioButton: FloatingActionButton
+    private lateinit var addIngredientActionButton: FloatingActionButton
 
     private var pantryRecyclerView: RecyclerView? = null
 
@@ -38,8 +38,8 @@ class PantryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        addIngredientActioButton = view.findViewById(R.id.addIngredientActionButton)
-        addIngredientActioButton.setOnClickListener{
+        addIngredientActionButton = view.findViewById(R.id.addIngredientActionButton)
+        addIngredientActionButton.setOnClickListener{
             showPantryPopup()
         }
 
