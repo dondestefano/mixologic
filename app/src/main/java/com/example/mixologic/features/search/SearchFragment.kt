@@ -65,8 +65,10 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     private fun showSortPopup(v: View) {
         val popup = PopupMenu(activity, v)
         popup.setOnMenuItemClickListener(this)
+
         val inflater: MenuInflater = popup.menuInflater
         inflater.inflate(R.menu.menu_sort, popup.menu)
+
         popup.show()
     }
 
@@ -79,21 +81,21 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_pantry -> {
-
+                searchViewModel.filterByPantry()
                 true
             }
             R.id.sort_fave -> {
-
+                searchViewModel.sortList(SORT_FAVOURITE)
                 true
             }
 
             R.id.sort_az -> {
-
+                searchViewModel.sortList(SORT_AZ)
                 true
             }
 
             R.id.sort_za -> {
-
+                searchViewModel.sortList(SORT_ZA)
                 true
             }
             else -> false

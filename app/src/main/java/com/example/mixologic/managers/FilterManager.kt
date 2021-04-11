@@ -3,7 +3,7 @@ package com.example.mixologic.managers
 import com.example.mixologic.data.Ingredient
 import com.example.mixologic.data.Recipe
 
-class FilterManager(private val originalList: List<Recipe>) {
+class FilterManager(val originalList: List<Recipe>) {
     fun filterByPantry(userPantry: List<Ingredient>): List<Recipe> {
 
         val filterOutNotPantry = { recipe: Recipe ->
@@ -20,7 +20,7 @@ class FilterManager(private val originalList: List<Recipe>) {
         } else {
             recipe.liquors.forEachIndexed { _, liquor ->
                 userPantry.forEachIndexed lit@{ _, userLiquor ->
-                    if (liquor.name == userLiquor.name) {
+                    if (liquor.name == userLiquor.name && liquor.amount!! <= userLiquor.amount!!) {
                         userHasIngredient = true
                         return@lit
                     } else {
