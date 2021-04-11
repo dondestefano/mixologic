@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_filter"
+        android:icon="@drawable/ic_filter"
+        android:title="@string/filter_by_pantry" />
+
+    <item
+        android:id="@+id/nav_favourite"
+        android:icon="@drawable/ic_sort"
+        android:title="@string/sort_by_favourite" />
+
+    <item
+        android:id="@+id/nav_az"
+        android:icon="@drawable/ic_sort"
+        android:title="@string/sort_by_name_az" />
+
+    <item
+        android:id="@+id/nav_za"
+        android:icon="@drawable/ic_sort"
+        android:title="@string/sort_by_name_za" />
+</menu>
