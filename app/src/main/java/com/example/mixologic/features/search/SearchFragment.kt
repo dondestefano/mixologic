@@ -1,8 +1,10 @@
 package com.example.mixologic.features.search
 
-import android.media.Image
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
@@ -18,6 +20,7 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private lateinit var drinkAdapter: DrinkAdapter
     private lateinit var searchRecipesRecyclerView: RecyclerView
+    private lateinit var searchBarEditText: EditText
     private lateinit var organizeButton: ImageView
 
     override fun onCreateView(
@@ -32,9 +35,11 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         searchRecipesRecyclerView = view.findViewById(R.id.searchRecipesRecyclerView)
+        searchBarEditText = view.findViewById(R.id.searchBarEditText)
         organizeButton = view.findViewById(R.id.organizeButton)
 
         initRecyclerView()
+        initSearchBar()
         observeViewModel()
 
         searchViewModel.fetchRecipes()
@@ -50,6 +55,20 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
         drinkAdapter = DrinkAdapter()
         searchRecipesRecyclerView.adapter = drinkAdapter
+    }
+
+    private fun initSearchBar() {
+        searchBarEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                searchViewModel.filterBySearch(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
     }
 
     private fun observeViewModel() {

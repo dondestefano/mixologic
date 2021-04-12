@@ -13,6 +13,15 @@ class FilterManager(val originalList: List<Recipe>) {
         return originalList.filter(filterOutNotPantry)
     }
 
+    fun filterByKeyword(keyword: String): List<Recipe> {
+
+        val filterBySearch = { recipe: Recipe ->
+            recipe.name?.contains(keyword)!!
+        }
+
+        return originalList.filter(filterBySearch)
+    }
+
     private fun userHasIngredient(recipe: Recipe, userPantry: List<Ingredient>): Boolean {
         var userHasIngredient = true
         if (recipe.liquors.isNullOrEmpty()) {

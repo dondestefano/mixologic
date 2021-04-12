@@ -49,6 +49,14 @@ class SearchViewModel: ViewModel() {
         recipeState.value = FetchState.SUCCESS
     }
 
+    fun filterBySearch(keyword: String) {
+        recipeState.value = FetchState.LOADING
+
+        recipes = filterManger.filterByKeyword(keyword)
+
+        recipeState.value = FetchState.SUCCESS
+    }
+
     fun sortList(sortType: String) {
         recipeState.value = FetchState.LOADING
 
