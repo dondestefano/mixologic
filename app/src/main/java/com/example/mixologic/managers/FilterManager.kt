@@ -1,5 +1,6 @@
 package com.example.mixologic.managers
 
+import android.util.Log
 import com.example.mixologic.data.Ingredient
 import com.example.mixologic.data.Recipe
 
@@ -23,16 +24,23 @@ class FilterManager(val originalList: List<Recipe>) {
     }
 
     private fun userHasIngredient(recipe: Recipe, userPantry: List<Ingredient>): Boolean {
-        var userHasIngredient = true
+        var userHasIngredient = false
+
         if (recipe.liquors.isNullOrEmpty()) {
             userHasIngredient = true
         } else {
-            recipe.liquors.forEachIndexed { _, liquor ->
-                userPantry.forEachIndexed lit@{ _, userLiquor ->
+            recipe.liquors.forEachIndexed lit@{ index, liquor ->
+                if (index > 0 && !userHasIngredient) {
+                    return userHasIngredient
+                }
+
+                userPantry.forEach { userLiquor ->
                     if (liquor.name == userLiquor.name && liquor.amount!! <= userLiquor.amount!!) {
+                        Log.d("!!!", "${userLiquor.name} was ${liquor.name} which is ${index+1} of ${recipe.liquors.size} for ${recipe.name}")
                         userHasIngredient = true
                         return@lit
                     } else {
+                        Log.e("!!!", "${userLiquor.name} was not have ${liquor.name} which is ${index+1} of ${recipe.liquors.size} for ${recipe.name} ")
                         userHasIngredient = false
                     }
                 }
