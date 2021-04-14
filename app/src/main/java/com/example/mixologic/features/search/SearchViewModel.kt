@@ -7,6 +7,7 @@ import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Ingredient
 import com.example.mixologic.managers.FilterManager
 import com.example.mixologic.managers.FirebaseManager
+import com.example.mixologic.managers.LiquorManager
 
 const val SORT_FAVOURITE = "sort_favourite"
 const val SORT_AZ = "sort_az"
@@ -40,8 +41,7 @@ class SearchViewModel: ViewModel() {
         filtered = !filtered
 
         recipes = if (filtered) {
-            val dummyUserPantry = listOf(Ingredient("Cognac", 13), Ingredient("Arrack", 13))
-            filterManger.filterByPantry(dummyUserPantry)
+            filterManger.filterByPantry(LiquorManager.getPantry())
         } else {
             filterManger.originalList
         }

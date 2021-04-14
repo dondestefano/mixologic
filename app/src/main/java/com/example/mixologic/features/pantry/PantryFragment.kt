@@ -63,8 +63,7 @@ class PantryFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        pantryViewModel.fetchPantry()
-
+        pantryViewModel.calculateRemaining()
         pantryViewModel.pantryState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 FetchState.SUCCESS -> {
@@ -127,6 +126,11 @@ class PantryFragment : Fragment() {
             0,
             0
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        pantryViewModel.updatePantryList()
     }
 
     private fun onDelete(ingredient: Ingredient) {

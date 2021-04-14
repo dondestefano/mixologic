@@ -10,7 +10,7 @@ import com.example.mixologic.managers.FirebaseManager
 import com.example.mixologic.managers.LiquorManager
 
 class PantryViewModel(): ViewModel() {
-    var pantryList = listOf<Ingredient>()
+    var pantryList = LiquorManager.getPantry()
     var remainingList = mutableListOf<String>()
     val pantryState = MutableLiveData<FetchState>()
 
@@ -19,11 +19,13 @@ class PantryViewModel(): ViewModel() {
             FirebaseManager.getUserPantry(AccountManager.getUser().uid).document(item.name)
                 .set(item)
                 .addOnSuccessListener {
-                    calculateRemaining()
+                    updatePantryList()
                     Log.d("!!!", "Item successfully added to database")
+                    pantryState.value = FetchState.SUCCESS
                 }
                 .addOnFailureListener {
                     Log.d("!!!", "Failed to add item to database")
+                    pantryState.value = FetchState.ERROR
                 }
         }
     }
@@ -33,32 +35,27 @@ class PantryViewModel(): ViewModel() {
             FirebaseManager.getUserPantry(AccountManager.getUser().uid).document(item.name)
                 .delete()
                 .addOnSuccessListener {
-                    calculateRemaining()
+                    updatePantryList()
                     Log.d("!!!", "Item successfully deleted")
+                    pantryState.value = FetchState.SUCCESS
                 }
                 .addOnFailureListener {
                     Log.d("!!!", "Failed to delete item to database")
+                    pantryState.value = FetchState.ERROR
                 }
         }
     }
 
-    fun fetchPantry() {
+    fun updatePantryList() {
         pantryState.value = FetchState.LOADING
-        FirebaseManager.getUserPantry(AccountManager.getUser().uid).addSnapshotListener{ value, error ->
-            if (value != null) {
-                val userPantry = value.toObjects(Ingredient::class.java)
-                pantryList = userPantry
 
-                calculateRemaining()
+        pantryList = LiquorManager.getPantry()
+        calculateRemaining()
 
-                pantryState.value = FetchState.SUCCESS
-            } else {
-                pantryState.value = FetchState.ERROR
-            }
-        }
+        pantryState.value = FetchState.SUCCESS
     }
 
-    private fun calculateRemaining() {
+    fun calculateRemaining() {
         remainingList.clear()
         remainingList.addAll(LiquorManager.getLiquors())
 
