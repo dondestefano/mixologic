@@ -77,6 +77,21 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
                 FetchState.SUCCESS -> {
                     drinkAdapter.updateItemsToList(searchViewModel.recipes)
                 }
+
+                FetchState.SORTED -> {
+                    searchViewModel.sortList(searchViewModel.sorted)
+                }
+
+                FetchState.FILTERED -> {
+                    searchViewModel.filterByPantry()
+                }
+
+                FetchState.FILTERED_SORTED -> {
+                    searchViewModel.filterByPantry()
+                    searchViewModel.sortList(searchViewModel.sorted)
+                }
+
+                else -> {}
             }
         })
     }
@@ -100,6 +115,7 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_pantry -> {
+                searchViewModel.setFiltered()
                 searchViewModel.filterByPantry()
                 true
             }
@@ -117,6 +133,7 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
                 searchViewModel.sortList(SORT_ZA)
                 true
             }
+
             else -> false
         }
     }

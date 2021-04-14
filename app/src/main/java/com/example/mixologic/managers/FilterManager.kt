@@ -6,7 +6,6 @@ import com.example.mixologic.data.Recipe
 
 class FilterManager(val originalList: List<Recipe>) {
     fun filterByPantry(userPantry: List<Ingredient>): List<Recipe> {
-
         val filterOutNotPantry = { recipe: Recipe ->
             userHasIngredient(recipe, userPantry)
         }
@@ -15,7 +14,6 @@ class FilterManager(val originalList: List<Recipe>) {
     }
 
     fun filterByKeyword(keyword: String): List<Recipe> {
-
         val filterBySearch = { recipe: Recipe ->
             recipe.name?.contains(keyword)!!
         }
