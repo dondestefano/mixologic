@@ -69,11 +69,61 @@
                         android:src="@drawable/ic_drink"
                         app:layout_constraintTop_toTopOf="parent"/>
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/interactionContainer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/drinkImageView">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/creatorImageView"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_profile"
+                            app:civ_border_width="2dp"
+                            app:civ_border_color="@color/black"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toEndOf="@id/creatorImageView"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:getUserName="@{recipe.creatorId}"
+                            android:layout_marginStart="8dp"/>
+
+                        <ImageView
+                            android:id="@+id/likeButton"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:likeStatus="@{recipe}"
+                            app:layout_constraintEnd_toStartOf="@id/likeCounterTextView"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:tint="@color/black" />
+
+                        <TextView
+                            android:id="@+id/likeCounterTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:getLikes="@{recipe}"
+                            android:layout_marginStart="8dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <TextView
                         android:id="@+id/liquorsTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/drinkImageView"
+                        app:layout_constraintTop_toBottomOf="@id/interactionContainer"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginVertical="16dp"
                         android:textSize="20sp"
@@ -124,6 +174,8 @@
                         app:layout_constraintTop_toBottomOf="@id/instructionsTitle"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
                         android:text="@{recipe.preparation}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
