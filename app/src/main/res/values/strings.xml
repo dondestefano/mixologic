@@ -5,7 +5,7 @@
     <string name="drinks">Drinks</string>
     <string name="liquors">Liquors</string>
     <string name="ingredients">Ingredients</string>
-    <string name="preparation">Preparation</string>
+    <string name="instructions">Instructions</string>
     <string name="unit">Unit</string>
     <string name="my_recipes">My recipes</string>
     <string name="create_drink">Create drink</string>
