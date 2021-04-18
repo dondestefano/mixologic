@@ -8,12 +8,12 @@ import android.view.View
 import android.widget.*
 import com.example.mixologic.R
 import com.example.mixologic.data.Ingredient
-import com.example.mixologic.features.create.CreateAdapter
+import com.example.mixologic.features.create.IngredientAdapter
 import com.example.mixologic.features.create.LIQUOR_KEY
 import com.example.mixologic.managers.LiquorManager
 
 class IngredientPopup {
-    fun showPopUp(type: String, adapter: CreateAdapter, activity: Activity, clearFocus: Unit, locationView: View, liquors: List<String>?) {
+    fun showPopUp(type: String, adapter: IngredientAdapter, activity: Activity, clearFocus: Unit, locationView: View, liquors: List<String>?) {
         val view = if (type == LIQUOR_KEY) {
             LayoutInflater.from(activity).inflate(R.layout.add_liquor_popup,null)
         } else {

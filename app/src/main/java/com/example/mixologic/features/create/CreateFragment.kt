@@ -18,8 +18,8 @@ const val INGREDIENT_KEY = "INGREDIENT_KEY"
 class CreateFragment : Fragment() {
     private val createViewModel: CreateViewModel by viewModels()
 
-    private lateinit var liquorAdapter: CreateAdapter
-    private lateinit var ingredientAdapter: CreateAdapter
+    private lateinit var liquorAdapter: IngredientAdapter
+    private lateinit var ingredientAdapter: IngredientAdapter
 
     private lateinit var addLiquorButton: ImageView
     private lateinit var addIngredientButton: ImageView
@@ -66,12 +66,12 @@ class CreateFragment : Fragment() {
     private fun initRecyclerViews() {
         ingredientRecyclerView = view?.findViewById(R.id.ingredientsRecyclerView)
         ingredientRecyclerView?.layoutManager = GridLayoutManager(ingredientRecyclerView?.context, 3, GridLayoutManager.HORIZONTAL, false)
-        ingredientAdapter = CreateAdapter(false)
+        ingredientAdapter = IngredientAdapter(false, editable = true)
         ingredientRecyclerView?.adapter = ingredientAdapter
 
         liquorRecyclerView = view?.findViewById(R.id.liquorsRecyclerView)
         liquorRecyclerView?.layoutManager = GridLayoutManager(ingredientRecyclerView?.context, 3, GridLayoutManager.HORIZONTAL, false)
-        liquorAdapter = CreateAdapter(true)
+        liquorAdapter = IngredientAdapter(true, editable = true)
         liquorRecyclerView?.adapter = liquorAdapter
     }
 
@@ -88,7 +88,7 @@ class CreateFragment : Fragment() {
         )
     }
 
-    private fun showPopUp(type: String, adapter: CreateAdapter) {
+    private fun showPopUp(type: String, adapter: IngredientAdapter) {
         val ingredientPopup = IngredientPopup()
 
         activity?.let {

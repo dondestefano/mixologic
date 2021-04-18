@@ -15,14 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Ingredient
-import com.example.mixologic.features.create.CreateAdapter
+import com.example.mixologic.features.create.IngredientAdapter
 import com.example.mixologic.managers.LiquorManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class PantryFragment : Fragment() {
     private val pantryViewModel: PantryViewModel by viewModels()
 
-    private lateinit var pantryAdapter: CreateAdapter
+    private lateinit var pantryAdapter: IngredientAdapter
     private lateinit var addIngredientActionButton: FloatingActionButton
 
     private var pantryRecyclerView: RecyclerView? = null
@@ -52,7 +52,7 @@ class PantryFragment : Fragment() {
 
         pantryRecyclerView = view?.findViewById(R.id.pantryRecyclerView)
         pantryRecyclerView?.layoutManager = layoutManager
-        pantryAdapter = CreateAdapter(true)
+        pantryAdapter = IngredientAdapter(true, editable = true)
         pantryRecyclerView?.adapter = pantryAdapter
 
         pantryAdapter.onDeleteListener = {ingredient ->

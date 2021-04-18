@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.mixologic.R
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.databinding.ActivityRecipeBinding
-import com.example.mixologic.features.create.CreateAdapter
+import com.example.mixologic.features.create.IngredientAdapter
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -15,8 +15,8 @@ class RecipeActivity: AppCompatActivity() {
     private lateinit var binding : ActivityRecipeBinding
     private val recipe by lazy { intent.getParcelableExtra<Recipe>("recipe") }
 
-    private lateinit var liquorAdapter: CreateAdapter
-    private lateinit var ingredientAdapter: CreateAdapter
+    private lateinit var liquorAdapter: IngredientAdapter
+    private lateinit var ingredientAdapter: IngredientAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +41,7 @@ class RecipeActivity: AppCompatActivity() {
             layoutManager.justifyContent = JustifyContent.FLEX_START
 
             binding.liquorsRecyclerView.layoutManager = layoutManager
-            liquorAdapter = CreateAdapter(true)
+            liquorAdapter = IngredientAdapter(true, editable = false)
             binding.liquorsRecyclerView.adapter = liquorAdapter
 
             recipe?.liquors?.let { liquorAdapter.updateItemsToList(it) }
@@ -53,7 +53,7 @@ class RecipeActivity: AppCompatActivity() {
             layoutManager.justifyContent = JustifyContent.FLEX_START
 
             binding.ingredientsRecyclerView.layoutManager = layoutManager
-            ingredientAdapter = CreateAdapter(false)
+            ingredientAdapter = IngredientAdapter(false, editable = false)
             binding.ingredientsRecyclerView.adapter = ingredientAdapter
 
             recipe?.ingredients?.let { ingredientAdapter.updateItemsToList(it) }

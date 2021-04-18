@@ -10,7 +10,7 @@ import com.example.mixologic.R
 import com.example.mixologic.data.Ingredient
 import com.example.mixologic.data.Recipe
 
-class CreateAdapter(private val isLiquorAdapter: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class IngredientAdapter(private val isLiquorAdapter: Boolean, private val editable: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var contents = mutableListOf<Ingredient>()
     var onClickListener: (Ingredient?) -> Unit = {}
     var onDeleteListener: (Ingredient?) -> Unit = {}
@@ -53,11 +53,16 @@ class CreateAdapter(private val isLiquorAdapter: Boolean) : RecyclerView.Adapter
 
         fun bind(ingredient: Ingredient) {
             text.text = "${ingredient.name} - ${ingredient.amount} ${ingredient.unit}"
-            removeButton.setOnClickListener{
-                onDeleteListener(contents[adapterPosition])
-                contents.remove(contents[adapterPosition])
-                notifyDataSetChanged()
+
+            if (editable) {
+                removeButton.visibility = View.VISIBLE
+                removeButton.setOnClickListener{
+                    onDeleteListener(contents[adapterPosition])
+                    contents.remove(contents[adapterPosition])
+                    notifyDataSetChanged()
+                }
             }
+
             view.setOnClickListener {
                 onClickListener(contents[adapterPosition])
             }
