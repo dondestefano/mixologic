@@ -1,5 +1,6 @@
 package com.example.mixologic.features.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.FetchState
+import com.example.mixologic.data.Recipe
+import com.example.mixologic.features.main.MainActivity
+import com.example.mixologic.features.recipe.RecipeActivity
 
 class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     private val searchViewModel: SearchViewModel by viewModels()
@@ -54,6 +58,11 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         searchRecipesRecyclerView.layoutManager = layoutManager
 
         drinkAdapter = DrinkAdapter()
+        drinkAdapter.onClickListener = {
+            if (it != null) {
+                goToDrinkActivity(it)
+            }
+        }
         searchRecipesRecyclerView.adapter = drinkAdapter
     }
 
@@ -136,5 +145,11 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
             else -> false
         }
+    }
+
+    private fun goToDrinkActivity(recipe: Recipe) {
+        val recipeIntent = Intent(activity, RecipeActivity::class.java)
+        recipeIntent.putExtra("recipe", recipe)
+        startActivity(recipeIntent)
     }
 }
