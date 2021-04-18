@@ -3,5 +3,8 @@ package com.example.mixologic.data
 enum class FetchState {
     ERROR,
     LOADING,
-    SUCCESS
+    SUCCESS,
+    FILTERED,
+    SORTED,
+    FILTERED_SORTED
 }

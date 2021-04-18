@@ -1,9 +1,11 @@
 package com.example.mixologic.managers
 
+import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Ingredient
 
 object LiquorManager {
     private var liquors = mutableListOf<String>()
+    private var pantryList = listOf<Ingredient>()
     private var units = listOf("ml", "cl", "dl", "st")
 
     fun fetchLiquors() {
@@ -18,8 +20,24 @@ object LiquorManager {
         }
     }
 
+    fun fetchPantry() {
+        FirebaseManager.getUserPantry(AccountManager.getUser().uid).addSnapshotListener{ value, error ->
+            pantryList = if (value != null) {
+                val userPantry = value.toObjects(Ingredient::class.java)
+                userPantry
+
+            } else {
+                listOf()
+            }
+        }
+    }
+
     fun getLiquors(): List<String> {
         return liquors
+    }
+
+    fun getPantry(): List<Ingredient> {
+        return pantryList
     }
 
     fun getUnits(): List<String> {

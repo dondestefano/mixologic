@@ -2,6 +2,7 @@
     <string name="app_name">Mixologic</string>
 
     <!-- Titles -->
+    <string name="drinks">Drinks</string>
     <string name="liquors">Liquors</string>
     <string name="ingredients">Ingredients</string>
     <string name="preparation">Preparation</string>
@@ -30,5 +31,11 @@
     <string name="password">Password</string>
     <string name="email">E-mail</string>
     <string name="username">Username</string>
+
+    <!-- Organize -->
+    <string name="filter_by_pantry">Filter by pantry</string>
+    <string name="sort_by_favourite">Sort by likes</string>
+    <string name="sort_by_name_az">Sort by A-Z</string>
+    <string name="sort_by_name_za">Sort by Z-A</string>
 
 </resources>

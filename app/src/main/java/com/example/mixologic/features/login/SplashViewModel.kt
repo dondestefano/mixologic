@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.mixologic.data.UserData
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.FirebaseManager
+import com.example.mixologic.managers.LiquorManager
 
 enum class FetchState {
     ERROR,
@@ -24,6 +25,7 @@ class SplashViewModel: ViewModel() {
                 if (value != null) {
                     val data = value.toObject(UserData::class.java) ?: AccountManager.getDefaultData()
                     AccountManager.setUserData(data)
+                    LiquorManager.fetchPantry()
                     fetchState.value = FetchState.SUCCESS
                 } else {
                     Toast.makeText(context, "Error fetching userdata: $error", Toast.LENGTH_SHORT)
