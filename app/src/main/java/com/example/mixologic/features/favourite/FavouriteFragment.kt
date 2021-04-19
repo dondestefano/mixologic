@@ -1,5 +1,6 @@
 package com.example.mixologic.features.favourite
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.FetchState
+import com.example.mixologic.data.Recipe
+import com.example.mixologic.features.recipe.RecipeActivity
 import com.example.mixologic.features.search.DrinkAdapter
 
 class FavouriteFragment : Fragment() {
@@ -44,6 +47,11 @@ class FavouriteFragment : Fragment() {
         favouriteRecipesRecyclerView.layoutManager = layoutManager
 
         drinkAdapter = DrinkAdapter()
+        drinkAdapter.onClickListener = {
+            if (it != null) {
+                goToDrinkActivity(it)
+            }
+        }
         favouriteRecipesRecyclerView.adapter = drinkAdapter
     }
 
@@ -55,6 +63,12 @@ class FavouriteFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun goToDrinkActivity(recipe: Recipe) {
+        val recipeIntent = Intent(activity, RecipeActivity::class.java)
+        recipeIntent.putExtra("recipe", recipe)
+        startActivity(recipeIntent)
     }
 
     companion object {
