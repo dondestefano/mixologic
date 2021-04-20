@@ -1,5 +1,6 @@
 package com.example.mixologic.features.create
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.features.popup.IngredientPopup
+import com.example.mixologic.features.recipe.RECIPE_KEY
+import com.example.mixologic.features.recipe.RecipeActivity
 import java.util.*
 
 const val LIQUOR_KEY = "LIQUOR_KEY"
@@ -47,6 +50,7 @@ class CreateFragment : Fragment() {
 
         initButtons()
         initRecyclerViews()
+        observeViewModel()
     }
 
     private fun initButtons() {
@@ -59,7 +63,15 @@ class CreateFragment : Fragment() {
         }
 
         submitButton.setOnClickListener() {
-            createViewModel.saveRecipe(createRecipe())
+            if (validateInput()) {
+                createViewModel.saveRecipe(createRecipe())
+            } else {
+                Toast.makeText(
+                        activity,
+                        "Please enter a name and instructions",
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -73,6 +85,27 @@ class CreateFragment : Fragment() {
         liquorRecyclerView?.layoutManager = GridLayoutManager(ingredientRecyclerView?.context, 3, GridLayoutManager.HORIZONTAL, false)
         liquorAdapter = IngredientAdapter(true, editable = true)
         liquorRecyclerView?.adapter = liquorAdapter
+    }
+
+    private fun observeViewModel() {
+        createViewModel.createState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            when (it) {
+                CreateState.SAVED -> {
+                    createViewModel.recipe?.let {
+                        recipe -> goToRecipeActivity(recipe)
+                    }
+                    resetInput()
+                }
+                CreateState.ERROR -> {
+                    Toast.makeText(
+                            activity,
+                            "Couldn't save recipe. Please try again later.",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {}
+            }
+        })
     }
 
     private fun createRecipe(): Recipe {
@@ -103,9 +136,30 @@ class CreateFragment : Fragment() {
         }
     }
 
+    private fun validateInput(): Boolean {
+        return !drinkNameEditText.text.isNullOrBlank() && !drinkInstructionsEditText.text.isNullOrBlank()
+    }
+
     private fun clearAllFocus() {
         drinkNameEditText.clearFocus()
         drinkInstructionsEditText.clearFocus()
+    }
+
+    private fun resetInput() {
+        drinkNameEditText.text.clear()
+        drinkInstructionsEditText.text.clear()
+
+        liquorRecyclerView = null
+        ingredientRecyclerView = null
+        initRecyclerViews()
+
+        createViewModel.resetViewModel()
+    }
+
+    private fun goToRecipeActivity(recipe: Recipe) {
+        val recipeIntent = Intent(activity, RecipeActivity::class.java)
+        recipeIntent.putExtra(RECIPE_KEY, recipe)
+        startActivity(recipeIntent)
     }
 
     companion object {
