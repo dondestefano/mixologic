@@ -18,12 +18,15 @@
                 android:id="@+id/drinkNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:hint="@string/enter_drink_name"
                 android:padding="8dp"
-                android:background="@drawable/edit_text"
-                tools:ignore="MissingConstraints" />
+
+                android:background="@drawable/edit_text" />
 
             <TextView
                 android:id="@+id/liquorsTitle"
