@@ -15,9 +15,11 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
+const val RECIPE_KEY = "recipe"
+
 class RecipeActivity: AppCompatActivity() {
     private lateinit var binding : ActivityRecipeBinding
-    private val recipe by lazy { intent.getParcelableExtra<Recipe>("recipe") }
+    private val recipe by lazy { intent.getParcelableExtra<Recipe>(RECIPE_KEY) }
 
     private lateinit var liquorAdapter: IngredientAdapter
     private lateinit var ingredientAdapter: IngredientAdapter

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Recipe
+import com.example.mixologic.features.recipe.RECIPE_KEY
 import com.example.mixologic.features.recipe.RecipeActivity
 import com.example.mixologic.features.search.DrinkAdapter
 
@@ -49,7 +50,7 @@ class FavouriteFragment : Fragment() {
         drinkAdapter = DrinkAdapter()
         drinkAdapter.onClickListener = {
             if (it != null) {
-                goToDrinkActivity(it)
+                goToRecipeActivity(it)
             }
         }
         favouriteRecipesRecyclerView.adapter = drinkAdapter
@@ -65,9 +66,9 @@ class FavouriteFragment : Fragment() {
         })
     }
 
-    private fun goToDrinkActivity(recipe: Recipe) {
+    private fun goToRecipeActivity(recipe: Recipe) {
         val recipeIntent = Intent(activity, RecipeActivity::class.java)
-        recipeIntent.putExtra("recipe", recipe)
+        recipeIntent.putExtra(RECIPE_KEY, recipe)
         startActivity(recipeIntent)
     }
 
