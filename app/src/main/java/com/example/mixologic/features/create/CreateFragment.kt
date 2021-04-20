@@ -6,13 +6,15 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.features.popup.IngredientPopup
 import com.example.mixologic.features.recipe.RECIPE_KEY
 import com.example.mixologic.features.recipe.RecipeActivity
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import java.util.*
 
 const val LIQUOR_KEY = "LIQUOR_KEY"
@@ -76,13 +78,21 @@ class CreateFragment : Fragment() {
     }
 
     private fun initRecyclerViews() {
+        val ingredientLayoutManager = FlexboxLayoutManager(activity)
+        ingredientLayoutManager.flexDirection = FlexDirection.ROW
+        ingredientLayoutManager.justifyContent = JustifyContent.FLEX_START
         ingredientRecyclerView = view?.findViewById(R.id.ingredientsRecyclerView)
-        ingredientRecyclerView?.layoutManager = GridLayoutManager(ingredientRecyclerView?.context, 3, GridLayoutManager.HORIZONTAL, false)
+
+        ingredientRecyclerView?.layoutManager = ingredientLayoutManager
         ingredientAdapter = IngredientAdapter(false, editable = true)
         ingredientRecyclerView?.adapter = ingredientAdapter
 
+        val liquorLayoutManager = FlexboxLayoutManager(activity)
+        liquorLayoutManager.flexDirection = FlexDirection.ROW
+        liquorLayoutManager.justifyContent = JustifyContent.FLEX_START
         liquorRecyclerView = view?.findViewById(R.id.liquorsRecyclerView)
-        liquorRecyclerView?.layoutManager = GridLayoutManager(ingredientRecyclerView?.context, 3, GridLayoutManager.HORIZONTAL, false)
+
+        liquorRecyclerView?.layoutManager = liquorLayoutManager
         liquorAdapter = IngredientAdapter(true, editable = true)
         liquorRecyclerView?.adapter = liquorAdapter
     }
