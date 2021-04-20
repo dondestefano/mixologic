@@ -11,6 +11,8 @@ import com.example.mixologic.managers.LikeManager
 class DrinkAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var recipes = listOf<Recipe>()
 
+    var onClickListener: (Recipe?) -> Unit = {}
+
     fun updateItemsToList(list : List<Recipe>) {
         recipes = list
         notifyDataSetChanged()
@@ -35,7 +37,7 @@ class DrinkAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount() = recipes.size
 
 
-    class DrinkViewHolder(private val binding: ViewDrinkListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class DrinkViewHolder(private val binding: ViewDrinkListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(recipeItem: Recipe) {
             binding.apply {
                 recipe = recipeItem
@@ -44,6 +46,10 @@ class DrinkAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             binding.likeButton.setOnClickListener{
                 LikeManager.handleOnLiked(recipeItem, AccountManager.getUser().uid)
+            }
+
+            binding.drinkCardContainer.setOnClickListener {
+                onClickListener(recipeItem)
             }
         }
     }

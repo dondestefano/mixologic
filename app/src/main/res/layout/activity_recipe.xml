@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="recipe"
+            type="com.example.mixologic.data.Recipe"/>
+    </data>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/recipeTitle"
+                app:layout_constraintBottom_toBottomOf="@id/recipeTitle"
+                app:layout_constraintEnd_toStartOf="@id/recipeTitle">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/recipeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{recipe.name}"
+                android:textSize="25sp"
+                android:textColor="@color/mango"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/backButton"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <View
+                android:id="@+id/titleDivider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                app:layout_constraintTop_toBottomOf="@id/recipeTitle"
+                android:layout_marginHorizontal="16dp"
+                android:background="@color/mango"/>
+
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/titleDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="32dp">
+
+                    <ImageView
+                        android:id="@+id/drinkImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:src="@drawable/ic_drink"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/interactionContainer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/drinkImageView">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/creatorImageView"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_profile"
+                            app:civ_border_width="2dp"
+                            app:civ_border_color="@color/black"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toEndOf="@id/creatorImageView"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:getUserName="@{recipe.creatorId}"
+                            android:layout_marginStart="8dp"/>
+
+                        <ImageView
+                            android:id="@+id/likeButton"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:likeStatus="@{recipe}"
+                            app:layout_constraintEnd_toStartOf="@id/likeCounterTextView"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:tint="@color/black" />
+
+                        <TextView
+                            android:id="@+id/likeCounterTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:getLikes="@{recipe}"
+                            android:layout_marginStart="8dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/liquorsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/interactionContainer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginVertical="16dp"
+                        android:textSize="20sp"
+                        android:text="@string/liquors" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/liquorsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/liquorsTitle"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:id="@+id/ingredientsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/liquorsRecyclerView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginVertical="16dp"
+                        android:textSize="20sp"
+                        android:text="@string/ingredients" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/ingredientsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ingredientsTitle"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/instructionsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/ingredientsRecyclerView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginVertical="16dp"
+                        android:textSize="20sp"
+                        android:text="@string/instructions" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/instructionsTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:text="@{recipe.preparation}" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

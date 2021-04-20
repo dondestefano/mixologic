@@ -1,7 +1,5 @@
 package com.example.mixologic.features.search
 
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat

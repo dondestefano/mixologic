@@ -1,5 +1,9 @@
 package com.example.mixologic.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Recipe (
         val name: String? = null,
         val preparation: String? = null,
@@ -8,4 +12,4 @@ data class Recipe (
         val id: String? = null,
         val creatorId: String? = null,
         val imageURL: String? = null,
-        var likes: List<Like>? = null )
+        var likes: MutableList<Like>? = null ): Parcelable
