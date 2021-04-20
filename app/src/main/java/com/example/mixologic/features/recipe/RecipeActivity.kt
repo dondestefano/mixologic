@@ -80,6 +80,11 @@ class RecipeActivity: AppCompatActivity() {
 
         hasUserLiked = !hasUserLiked
 
+        if (recipe?.likes == null) {
+            val initialLike = Like(AccountManager.getUser().uid)
+            recipe?.likes = mutableListOf(initialLike)
+        }
+
         if(hasUserLiked) {
             val likedIcon = ContextCompat.getDrawable(this, R.drawable.ic_heart_full)
             binding.likeButton.setImageDrawable(likedIcon)
