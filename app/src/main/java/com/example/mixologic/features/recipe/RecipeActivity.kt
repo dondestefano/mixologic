@@ -79,35 +79,24 @@ class RecipeActivity: AppCompatActivity() {
         recipe?.let { LikeManager.handleOnLiked(it, AccountManager.getUser().uid) }
 
         hasUserLiked = !hasUserLiked
+        val like = Like(AccountManager.getUser().uid)
 
         if (recipe?.likes == null) {
-            val initialLike = Like(AccountManager.getUser().uid)
-            recipe?.likes = mutableListOf(initialLike)
-        }
-
-        if(hasUserLiked) {
-            val likedIcon = ContextCompat.getDrawable(this, R.drawable.ic_heart_full)
-            binding.likeButton.setImageDrawable(likedIcon)
-
-            if(!LikeManager.hasUserLiked(recipe?.likes!!, AccountManager.getUser().uid)) {
-                val like = Like(AccountManager.getUser().uid)
-                recipe!!.likes?.add(like)
-            }
+            recipe?.likes = mutableListOf(like)
         } else {
-            val notLikedIcon = ContextCompat.getDrawable(this, R.drawable.ic_heart_outline)
-            binding.likeButton.setImageDrawable(notLikedIcon)
-
-            if(LikeManager.hasUserLiked(recipe?.likes!!, AccountManager.getUser().uid)) {
-                val like = Like(AccountManager.getUser().uid)
+            if(hasUserLiked) {
+                recipe!!.likes?.add(like)
+            } else {
                 recipe!!.likes?.remove(like)
             }
         }
 
-        binding.likeCounterTextView.text = recipe!!.likes?.size.toString()
+        binding.recipe = recipe
     }
 
     override fun onResume() {
         super.onResume()
         binding.recipe = recipe
+        binding.executePendingBindings()
     }
 }
