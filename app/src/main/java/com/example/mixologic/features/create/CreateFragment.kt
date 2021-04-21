@@ -1,15 +1,20 @@
 package com.example.mixologic.features.create
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.features.popup.IngredientPopup
+import com.example.mixologic.features.recipe.RECIPE_KEY
+import com.example.mixologic.features.recipe.RecipeActivity
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import java.util.*
 
 const val LIQUOR_KEY = "LIQUOR_KEY"
@@ -47,6 +52,7 @@ class CreateFragment : Fragment() {
 
         initButtons()
         initRecyclerViews()
+        observeViewModel()
     }
 
     private fun initButtons() {
@@ -59,20 +65,57 @@ class CreateFragment : Fragment() {
         }
 
         submitButton.setOnClickListener() {
-            createViewModel.saveRecipe(createRecipe())
+            if (validateInput()) {
+                createViewModel.saveRecipe(createRecipe())
+            } else {
+                Toast.makeText(
+                        activity,
+                        "Please enter a name and instructions",
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
     private fun initRecyclerViews() {
+        val ingredientLayoutManager = FlexboxLayoutManager(activity)
+        ingredientLayoutManager.flexDirection = FlexDirection.ROW
+        ingredientLayoutManager.justifyContent = JustifyContent.FLEX_START
         ingredientRecyclerView = view?.findViewById(R.id.ingredientsRecyclerView)
-        ingredientRecyclerView?.layoutManager = GridLayoutManager(ingredientRecyclerView?.context, 3, GridLayoutManager.HORIZONTAL, false)
+
+        ingredientRecyclerView?.layoutManager = ingredientLayoutManager
         ingredientAdapter = IngredientAdapter(false, editable = true)
         ingredientRecyclerView?.adapter = ingredientAdapter
 
+        val liquorLayoutManager = FlexboxLayoutManager(activity)
+        liquorLayoutManager.flexDirection = FlexDirection.ROW
+        liquorLayoutManager.justifyContent = JustifyContent.FLEX_START
         liquorRecyclerView = view?.findViewById(R.id.liquorsRecyclerView)
-        liquorRecyclerView?.layoutManager = GridLayoutManager(ingredientRecyclerView?.context, 3, GridLayoutManager.HORIZONTAL, false)
+
+        liquorRecyclerView?.layoutManager = liquorLayoutManager
         liquorAdapter = IngredientAdapter(true, editable = true)
         liquorRecyclerView?.adapter = liquorAdapter
+    }
+
+    private fun observeViewModel() {
+        createViewModel.createState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            when (it) {
+                CreateState.SAVED -> {
+                    createViewModel.recipe?.let {
+                        recipe -> goToRecipeActivity(recipe)
+                    }
+                    resetInput()
+                }
+                CreateState.ERROR -> {
+                    Toast.makeText(
+                            activity,
+                            "Couldn't save recipe. Please try again later.",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {}
+            }
+        })
     }
 
     private fun createRecipe(): Recipe {
@@ -103,9 +146,30 @@ class CreateFragment : Fragment() {
         }
     }
 
+    private fun validateInput(): Boolean {
+        return !drinkNameEditText.text.isNullOrBlank() && !drinkInstructionsEditText.text.isNullOrBlank()
+    }
+
     private fun clearAllFocus() {
         drinkNameEditText.clearFocus()
         drinkInstructionsEditText.clearFocus()
+    }
+
+    private fun resetInput() {
+        drinkNameEditText.text.clear()
+        drinkInstructionsEditText.text.clear()
+
+        liquorRecyclerView = null
+        ingredientRecyclerView = null
+        initRecyclerViews()
+
+        createViewModel.resetViewModel()
+    }
+
+    private fun goToRecipeActivity(recipe: Recipe) {
+        val recipeIntent = Intent(activity, RecipeActivity::class.java)
+        recipeIntent.putExtra(RECIPE_KEY, recipe)
+        startActivity(recipeIntent)
     }
 
     companion object {
