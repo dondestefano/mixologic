@@ -121,13 +121,13 @@ class CreateFragment : Fragment() {
     private fun createRecipe(): Recipe {
 
         return Recipe(
-            drinkNameEditText.text.toString(),
-            drinkInstructionsEditText.text.toString(),
-            liquorAdapter.getIngredients(),
-            ingredientAdapter.getIngredients(),
-            UUID.randomUUID().toString(),
-            com.example.mixologic.managers.AccountManager.getUser().uid,
-            ""
+                UUID.randomUUID().toString(),
+                drinkNameEditText.text.toString(),
+                drinkInstructionsEditText.text.toString(),
+                liquorAdapter.getIngredients(),
+                ingredientAdapter.getIngredients(),
+                com.example.mixologic.managers.AccountManager.getUser().uid,
+                ""
         )
     }
 
