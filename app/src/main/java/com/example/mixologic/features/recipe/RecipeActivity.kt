@@ -2,7 +2,6 @@ package com.example.mixologic.features.recipe
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.mixologic.R
 import com.example.mixologic.data.Like
@@ -14,6 +13,8 @@ import com.example.mixologic.managers.LikeManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 const val RECIPE_KEY = "recipe"
 
@@ -76,7 +77,9 @@ class RecipeActivity: AppCompatActivity() {
     }
 
     private fun userLiked() {
-        recipe?.let { LikeManager.handleOnLiked(it, AccountManager.getUser().uid) }
+        GlobalScope.launch {
+            recipe?.let { LikeManager.handleOnLiked(it, AccountManager.getUser().uid) }
+        }
 
         hasUserLiked = !hasUserLiked
         val like = Like(AccountManager.getUser().uid)

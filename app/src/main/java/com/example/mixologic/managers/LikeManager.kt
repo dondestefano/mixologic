@@ -1,19 +1,24 @@
 package com.example.mixologic.managers
 
+import com.example.mixologic.application.MixologicApplication
 import com.example.mixologic.data.Like
 import com.example.mixologic.data.Recipe
 import com.google.firebase.firestore.FieldValue
 
 object LikeManager {
-    fun handleOnLiked(recipe: Recipe, userId: String) {
+    lateinit var application: MixologicApplication
+
+    suspend fun handleOnLiked(recipe: Recipe, userId: String) {
         if (recipe.likes == null) {
             initialLike(recipe, userId)
         } else {
             recipe.likes?.let { likes ->
                 if (!hasUserLiked(likes, userId)) {
                     likeRecipe(recipe, userId)
+                    application.favouriteRepository.saveToCache(recipe)
                 } else {
                     unlikeRecipe(recipe, userId)
+                    application.favouriteRepository.deleteFromCache(recipe)
                 }
             }
         }

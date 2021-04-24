@@ -6,7 +6,9 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.mixologic.data.room.FavouriteRepository
 import com.example.mixologic.data.room.RecipeCacheDatabase
+import com.example.mixologic.managers.LikeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -14,12 +16,15 @@ class MixologicApplication: Application() {
     val applicationScope = CoroutineScope(SupervisorJob())
 
     val database by lazy { RecipeCacheDatabase.getInstance(this, applicationScope) }
+    val favouriteRepository by lazy { FavouriteRepository(database.recipeCacheDao) }
     private var isNetworkConnected = false
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate() {
         super.onCreate()
         registerNetworkCallback(applicationContext)
+
+        LikeManager.application = this
     }
 
 
@@ -39,9 +44,7 @@ class MixologicApplication: Application() {
                 override fun onLost(network: Network) {
                     isNetworkConnected = false
                 }
-            }
-            )
-            isNetworkConnected = false
+            })
         } catch (e: Exception) {
             isNetworkConnected = false
         }

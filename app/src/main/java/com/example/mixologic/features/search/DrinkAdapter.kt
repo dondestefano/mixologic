@@ -7,6 +7,8 @@ import com.example.mixologic.data.Recipe
 import com.example.mixologic.databinding.ViewDrinkListBinding
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.LikeManager
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class DrinkAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var recipes = listOf<Recipe>()
@@ -45,7 +47,9 @@ class DrinkAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
 
             binding.likeButton.setOnClickListener{
-                LikeManager.handleOnLiked(recipeItem, AccountManager.getUser().uid)
+               GlobalScope.launch {
+                    LikeManager.handleOnLiked(recipeItem, AccountManager.getUser().uid)
+                }
             }
 
             binding.drinkCardContainer.setOnClickListener {
