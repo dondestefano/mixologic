@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
+import com.example.mixologic.application.MixologicApplication
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.features.popup.IngredientPopup
 import com.example.mixologic.features.recipe.RECIPE_KEY
@@ -66,7 +67,7 @@ class CreateFragment : Fragment() {
 
         submitButton.setOnClickListener() {
             if (validateInput()) {
-                createViewModel.saveRecipe(createRecipe())
+                createViewModel.saveRecipe(createRecipe(), (activity?.application as MixologicApplication))
             } else {
                 Toast.makeText(
                         activity,
@@ -110,6 +111,13 @@ class CreateFragment : Fragment() {
                     Toast.makeText(
                             activity,
                             "Couldn't save recipe. Please try again later.",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+                CreateState.NO_NETWORK -> {
+                    Toast.makeText(
+                            activity,
+                            "No network connection detected. Please reconnect and try again.",
                             Toast.LENGTH_SHORT
                     ).show()
                 }
