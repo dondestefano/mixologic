@@ -2,7 +2,6 @@ package com.example.mixologic.features.recipe
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.mixologic.R
 import com.example.mixologic.data.Like
@@ -14,6 +13,8 @@ import com.example.mixologic.managers.LikeManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 const val RECIPE_KEY = "recipe"
 
@@ -76,38 +77,29 @@ class RecipeActivity: AppCompatActivity() {
     }
 
     private fun userLiked() {
-        recipe?.let { LikeManager.handleOnLiked(it, AccountManager.getUser().uid) }
-
-        hasUserLiked = !hasUserLiked
-
-        if (recipe?.likes == null) {
-            val initialLike = Like(AccountManager.getUser().uid)
-            recipe?.likes = mutableListOf(initialLike)
+        GlobalScope.launch {
+            recipe?.let { LikeManager.handleOnLiked(it, AccountManager.getUser().uid) }
         }
 
-        if(hasUserLiked) {
-            val likedIcon = ContextCompat.getDrawable(this, R.drawable.ic_heart_full)
-            binding.likeButton.setImageDrawable(likedIcon)
+        hasUserLiked = !hasUserLiked
+        val like = Like(AccountManager.getUser().uid)
 
-            if(!LikeManager.hasUserLiked(recipe?.likes!!, AccountManager.getUser().uid)) {
-                val like = Like(AccountManager.getUser().uid)
-                recipe!!.likes?.add(like)
-            }
+        if (recipe?.likes == null) {
+            recipe?.likes = mutableListOf(like)
         } else {
-            val notLikedIcon = ContextCompat.getDrawable(this, R.drawable.ic_heart_outline)
-            binding.likeButton.setImageDrawable(notLikedIcon)
-
-            if(LikeManager.hasUserLiked(recipe?.likes!!, AccountManager.getUser().uid)) {
-                val like = Like(AccountManager.getUser().uid)
+            if(hasUserLiked) {
+                recipe!!.likes?.add(like)
+            } else {
                 recipe!!.likes?.remove(like)
             }
         }
 
-        binding.likeCounterTextView.text = recipe!!.likes?.size.toString()
+        binding.recipe = recipe
     }
 
     override fun onResume() {
         super.onResume()
         binding.recipe = recipe
+        binding.executePendingBindings()
     }
 }

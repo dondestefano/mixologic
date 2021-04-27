@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
+import com.example.mixologic.application.MixologicApplication
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.features.popup.IngredientPopup
 import com.example.mixologic.features.recipe.RECIPE_KEY
@@ -66,7 +67,7 @@ class CreateFragment : Fragment() {
 
         submitButton.setOnClickListener() {
             if (validateInput()) {
-                createViewModel.saveRecipe(createRecipe())
+                createViewModel.saveRecipe(createRecipe(), (activity?.application as MixologicApplication))
             } else {
                 Toast.makeText(
                         activity,
@@ -113,6 +114,13 @@ class CreateFragment : Fragment() {
                             Toast.LENGTH_SHORT
                     ).show()
                 }
+                CreateState.NO_NETWORK -> {
+                    Toast.makeText(
+                            activity,
+                            "No network connection detected. Please reconnect and try again.",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
                 else -> {}
             }
         })
@@ -121,13 +129,13 @@ class CreateFragment : Fragment() {
     private fun createRecipe(): Recipe {
 
         return Recipe(
-            drinkNameEditText.text.toString(),
-            drinkInstructionsEditText.text.toString(),
-            liquorAdapter.getIngredients(),
-            ingredientAdapter.getIngredients(),
-            UUID.randomUUID().toString(),
-            com.example.mixologic.managers.AccountManager.getUser().uid,
-            ""
+                UUID.randomUUID().toString(),
+                drinkNameEditText.text.toString(),
+                drinkInstructionsEditText.text.toString(),
+                liquorAdapter.getIngredients(),
+                ingredientAdapter.getIngredients(),
+                com.example.mixologic.managers.AccountManager.getUser().uid,
+                ""
         )
     }
 

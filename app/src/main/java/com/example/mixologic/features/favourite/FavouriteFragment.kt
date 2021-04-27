@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
+import com.example.mixologic.application.MixologicApplication
 import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Recipe
 import com.example.mixologic.features.recipe.RECIPE_KEY
@@ -23,6 +24,7 @@ class FavouriteFragment : Fragment() {
     private lateinit var drinkAdapter: DrinkAdapter
     private lateinit var favouriteRecipesRecyclerView: RecyclerView
 
+    private var cacheMode = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +42,7 @@ class FavouriteFragment : Fragment() {
         initRecyclerView()
         observeViewModel()
 
-        favouriteViewModel.fetchLikedRecipes()
+        favouriteViewModel.fetchLikedRecipes(activity?.application as MixologicApplication)
     }
 
     private fun initRecyclerView() {
@@ -62,6 +64,7 @@ class FavouriteFragment : Fragment() {
                 FetchState.SUCCESS -> {
                     drinkAdapter.updateItemsToList(favouriteViewModel.recipes)
                 }
+                else -> {}
             }
         })
     }
@@ -70,6 +73,20 @@ class FavouriteFragment : Fragment() {
         val recipeIntent = Intent(activity, RecipeActivity::class.java)
         recipeIntent.putExtra(RECIPE_KEY, recipe)
         startActivity(recipeIntent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val application = (activity?.application as MixologicApplication)
+        if(!application.checkNetwork()) {
+            cacheMode = true
+            favouriteViewModel.fetchFromCached(application)
+        } else {
+            if(cacheMode) {
+                favouriteViewModel.fetchLikedRecipes(activity?.application as MixologicApplication)
+            }
+        }
     }
 
     companion object {
