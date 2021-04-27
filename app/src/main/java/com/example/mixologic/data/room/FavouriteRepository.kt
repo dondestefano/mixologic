@@ -16,6 +16,12 @@ class FavouriteRepository(private val recipeCacheDao: RecipeCacheDao) {
     }
 
     @WorkerThread
+    suspend fun saveAllToCache(list: List<Recipe>) {
+        recipeCacheDao.deleteAll()
+        recipeCacheDao.insertAll(list)
+    }
+
+    @WorkerThread
     fun deleteFromCache(recipe: Recipe) {
         recipeCacheDao.delete(recipe)
     }

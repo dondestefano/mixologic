@@ -9,16 +9,18 @@ object LikeManager {
     lateinit var application: MixologicApplication
 
     suspend fun handleOnLiked(recipe: Recipe, userId: String) {
-        if (recipe.likes == null) {
-            initialLike(recipe, userId)
-        } else {
-            recipe.likes?.let { likes ->
-                if (!hasUserLiked(likes, userId)) {
-                    likeRecipe(recipe, userId)
-                    application.favouriteRepository.saveToCache(recipe)
-                } else {
-                    unlikeRecipe(recipe, userId)
-                    application.favouriteRepository.deleteFromCache(recipe)
+        if(application.checkNetwork()) {
+            if (recipe.likes == null) {
+                initialLike(recipe, userId)
+            } else {
+                recipe.likes?.let { likes ->
+                    if (!hasUserLiked(likes, userId)) {
+                        likeRecipe(recipe, userId)
+                        application.favouriteRepository.saveToCache(recipe)
+                    } else {
+                        unlikeRecipe(recipe, userId)
+                        application.favouriteRepository.deleteFromCache(recipe)
+                    }
                 }
             }
         }

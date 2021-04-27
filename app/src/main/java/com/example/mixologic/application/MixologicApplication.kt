@@ -13,9 +13,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
 class MixologicApplication: Application() {
-    val applicationScope = CoroutineScope(SupervisorJob())
+    private val applicationScope = CoroutineScope(SupervisorJob())
+    private val database by lazy { RecipeCacheDatabase.getInstance(this, applicationScope) }
 
-    val database by lazy { RecipeCacheDatabase.getInstance(this, applicationScope) }
     val favouriteRepository by lazy { FavouriteRepository(database.recipeCacheDao) }
     private var isNetworkConnected = false
 
@@ -26,7 +26,6 @@ class MixologicApplication: Application() {
 
         LikeManager.application = this
     }
-
 
     fun checkNetwork(): Boolean {
         return isNetworkConnected
