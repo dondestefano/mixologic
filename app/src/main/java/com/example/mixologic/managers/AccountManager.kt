@@ -1,9 +1,10 @@
 package com.example.mixologic.managers
 
+import android.net.Uri
 import com.example.mixologic.data.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.auth.User
+import java.util.*
 
 object AccountManager {
     private val auth = FirebaseAuth.getInstance()
@@ -42,6 +43,19 @@ object AccountManager {
         FirebaseManager.getUsersUserData(user.uid)
                 .document("info")
                 .set(userData)
+    }
+
+    fun saveUserImage(selectedPhotoUri: Uri) {
+        val filename = UUID.randomUUID().toString()
+        // Save the image to FirebaseStorage.
+        val imageRef = FirebaseManager.getStorage().getReference("/images/$filename")
+        imageRef.putFile(selectedPhotoUri).addOnSuccessListener {
+            imageRef.downloadUrl.addOnSuccessListener {
+                FirebaseManager.getUsersUserData(user.uid)
+                        .document("info")
+                        .update("profileImageURL", it.toString())
+            }
+        }
     }
 
     fun getDefaultData(): UserData {
