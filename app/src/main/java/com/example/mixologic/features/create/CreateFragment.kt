@@ -1,10 +1,13 @@
 package com.example.mixologic.features.create
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
@@ -16,6 +19,7 @@ import com.example.mixologic.features.recipe.RecipeActivity
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.squareup.picasso.Picasso
 import java.util.*
 
 const val LIQUOR_KEY = "LIQUOR_KEY"
@@ -32,6 +36,7 @@ class CreateFragment : Fragment() {
     private lateinit var drinkNameEditText: EditText
     private lateinit var drinkInstructionsEditText: EditText
     private lateinit var submitButton: Button
+    private lateinit var uploadImageView: ImageView
 
     private var liquorRecyclerView: RecyclerView? = null
     private var ingredientRecyclerView: RecyclerView? = null
@@ -50,10 +55,29 @@ class CreateFragment : Fragment() {
         drinkNameEditText = view.findViewById(R.id.drinkNameEditText)
         drinkInstructionsEditText = view.findViewById(R.id.instructionsEditText)
         submitButton = view.findViewById(R.id.submitButton)
+        uploadImageView = view.findViewById(R.id.uploadImageView)
 
         initButtons()
         initRecyclerViews()
         observeViewModel()
+    }
+
+
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            val data: Intent? = result.data
+            if (data != null) {
+                createViewModel.photoUri = data.data
+
+                Picasso
+                    .get()
+                    .load(createViewModel.photoUri)
+                    .fit()
+                    .centerCrop()
+                    .into(uploadImageView)
+            }
+        }
     }
 
     private fun initButtons() {
@@ -75,6 +99,12 @@ class CreateFragment : Fragment() {
                         Toast.LENGTH_SHORT
                 ).show()
             }
+        }
+
+        uploadImageView.setOnClickListener{
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            resultLauncher.launch(intent)
         }
     }
 
@@ -166,6 +196,9 @@ class CreateFragment : Fragment() {
     private fun resetInput() {
         drinkNameEditText.text.clear()
         drinkInstructionsEditText.text.clear()
+        activity?.let {
+            uploadImageView.setImageDrawable(ContextCompat.getDrawable(it, R.drawable.ic_add_photo))
+        }
 
         liquorRecyclerView = null
         ingredientRecyclerView = null
