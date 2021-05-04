@@ -12,9 +12,22 @@ import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.FirebaseManager
 import com.example.mixologic.managers.LikeManager
 import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
+    if (!imageUrl.isNullOrEmpty()) {
+        Picasso
+            .get()
+            .load(imageUrl)
+            .fit()
+            .centerCrop()
+            .into(view)
+    }
+}
+
+@BindingAdapter("imageCircleFromUrl")
+fun bindCircleImageFromUrl(view: CircleImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
         Picasso
             .get()
@@ -49,14 +62,33 @@ fun getUserName(view: TextView, id: String?) {
             view.text = AccountManager.getUsername()
         } else {
             FirebaseManager.getUsersUserData(id)
-                    .document("info")
-                    .addSnapshotListener { value, error ->
-                        if (value != null) {
-                            val userData = value.toObject(UserData::class.java)
-                                    ?: AccountManager.getDefaultData()
-                            view.text = userData.name
-                        }
+                .document("info")
+                .addSnapshotListener { value, error ->
+                    if (value != null) {
+                        val userData = value.toObject(UserData::class.java)
+                            ?: AccountManager.getDefaultData()
+                        view.text = userData.name
                     }
+                }
+        }
+    }
+}
+
+@BindingAdapter("getUserProfileImage")
+fun getUserProfileImage(view: CircleImageView, id: String?) {
+    if (id != null) {
+        if (id == AccountManager.getUser().uid) {
+            bindCircleImageFromUrl(view, AccountManager.getUserdata().profileImageURL)
+        } else {
+            FirebaseManager.getUsersUserData(id)
+                .document("info")
+                .addSnapshotListener { value, error ->
+                    if (value != null) {
+                        val userData = value.toObject(UserData::class.java)
+                            ?: AccountManager.getDefaultData()
+                        bindCircleImageFromUrl(view, userData.profileImageURL)
+                    }
+                }
         }
     }
 }

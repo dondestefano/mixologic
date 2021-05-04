@@ -68,7 +68,7 @@
                         android:layout_height="200dp"
                         android:src="@drawable/ic_drink"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:imageFromUrl="@{recipe.imageURL}"/>
+                        app:imageFromUrl="@{recipe.imageURL}" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/interactionContainer"
