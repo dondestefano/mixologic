@@ -38,4 +38,8 @@
     <string name="sort_by_name_az">Sort by A-Z</string>
     <string name="sort_by_name_za">Sort by Z-A</string>
 
+    <!-- Profile -->
+    <string name="profile_pantry">Pantry: %s</string>
+    <string name="profile_recipe">Recipes: %s</string>
+
 </resources>
