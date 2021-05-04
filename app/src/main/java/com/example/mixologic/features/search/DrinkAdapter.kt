@@ -31,6 +31,7 @@ class DrinkAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder.setIsRecyclable(false)
         val recipe = recipes[position]
 
         (holder as DrinkViewHolder).bind(recipe)
