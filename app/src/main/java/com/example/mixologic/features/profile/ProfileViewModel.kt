@@ -1,5 +1,6 @@
 package com.example.mixologic.features.profile
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mixologic.data.Recipe
@@ -22,6 +23,7 @@ class ProfileViewModel: ViewModel() {
                         userRecipes = recipes
                         recipeState.value = FetchState.SUCCESS
                     } else {
+                        Log.e("Error", "Failed fetching user recipes: $error")
                         recipeState.value = FetchState.ERROR
             }
         }

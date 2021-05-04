@@ -1,5 +1,6 @@
 package com.example.mixologic.features.favourite
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mixologic.application.MixologicApplication
@@ -24,6 +25,7 @@ class FavouriteViewModel: ViewModel() {
 
                     saveToCache(application)
                 } else {
+                    Log.e("Error", "Failed fetching liked recipes: $error")
                     recipeState.value = FetchState.ERROR
                 }
             }

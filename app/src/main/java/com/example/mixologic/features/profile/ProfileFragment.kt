@@ -69,7 +69,9 @@ class ProfileFragment : Fragment() {
                 FetchState.SUCCESS -> {
                     drinkAdapter.updateItemsToList(profileViewModel.userRecipes)
                 }
+                else -> {}
             }
+
         })
     }
 

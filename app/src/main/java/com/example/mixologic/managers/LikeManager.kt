@@ -27,22 +27,22 @@ object LikeManager {
     }
 
     private fun likeRecipe(recipe: Recipe, userId: String) {
-        recipe.id?.let {
+        recipe.id.let {
             FirebaseManager.getRecipe(it)
                     .update("likes", FieldValue.arrayUnion(Like(userId)))
         }
     }
 
     private fun unlikeRecipe(recipe: Recipe, userId: String) {
-        recipe.id?.let {
-                FirebaseManager.getRecipe(it)
-                    .update("likes", FieldValue.arrayRemove(Like(userId)))
+        recipe.id.let {
+            FirebaseManager.getRecipe(it)
+                .update("likes", FieldValue.arrayRemove(Like(userId)))
         }
     }
 
     private fun initialLike(recipe: Recipe, userId: String) {
         val likes = listOf(Like(userId))
-        recipe.id?.let {
+        recipe.id.let {
             FirebaseManager.getRecipe(it)
                     .update("likes", likes)
         }

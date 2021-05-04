@@ -1,7 +1,5 @@
 package com.example.mixologic.features.login
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mixologic.data.UserData

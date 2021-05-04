@@ -30,7 +30,6 @@ abstract class RecipeCacheDatabase: RoomDatabase() {
                         .addCallback(RecipeCacheDatabaseCallback(scope))
                         .build()
                 INSTANCE = instance
-                Log.d("!!!", "Got databse")
                 // return instance
                 instance
             }

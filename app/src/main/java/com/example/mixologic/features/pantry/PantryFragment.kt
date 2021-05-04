@@ -69,6 +69,7 @@ class PantryFragment : Fragment() {
                 FetchState.SUCCESS -> {
                     pantryAdapter.updateItemsToList(pantryViewModel.pantryList)
                 }
+                else -> {}
             }
         })
     }
