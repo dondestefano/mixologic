@@ -95,8 +95,6 @@ class RecipeActivity: AppCompatActivity() {
 
             binding.recipe = recipe
         }
-
-
     }
 
     override fun onResume() {

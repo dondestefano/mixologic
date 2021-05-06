@@ -19,6 +19,7 @@
     <string name="add_ingredient">Add ingredient</string>
     <string name="set_ingredient">Ingredient...</string>
     <string name="set_amount">Amount...</string>
+    <string name="hint_search">Search...</string>
 
     <!-- Buttons -->
     <string name="submit">Submit</string>
