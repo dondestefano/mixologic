@@ -23,6 +23,9 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
             .fit()
             .centerCrop()
             .into(view)
+    } else {
+        val profileIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_drink)
+        view.setImageDrawable(profileIcon)
     }
 }
 
@@ -35,6 +38,9 @@ fun bindCircleImageFromUrl(view: CircleImageView, imageUrl: String?) {
             .fit()
             .centerCrop()
             .into(view)
+    } else {
+        val profileIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_profile)
+        view.setImageDrawable(profileIcon)
     }
 }
 
