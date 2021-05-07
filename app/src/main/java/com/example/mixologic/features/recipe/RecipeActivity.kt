@@ -79,22 +79,22 @@ class RecipeActivity: AppCompatActivity() {
     private fun userLiked() {
         GlobalScope.launch {
             recipe?.let { LikeManager.handleOnLiked(it, AccountManager.getUser().uid) }
-        }
 
-        hasUserLiked = !hasUserLiked
-        val like = Like(AccountManager.getUser().uid)
+            hasUserLiked = !hasUserLiked
+            val like = Like(AccountManager.getUser().uid)
 
-        if (recipe?.likes == null) {
-            recipe?.likes = mutableListOf(like)
-        } else {
-            if(hasUserLiked) {
-                recipe!!.likes?.add(like)
+            if (recipe?.likes == null) {
+                recipe?.likes = mutableListOf(like)
             } else {
-                recipe!!.likes?.remove(like)
+                if(hasUserLiked) {
+                    recipe!!.likes?.add(like)
+                } else {
+                    recipe!!.likes?.remove(like)
+                }
             }
-        }
 
-        binding.recipe = recipe
+            binding.recipe = recipe
+        }
     }
 
     override fun onResume() {

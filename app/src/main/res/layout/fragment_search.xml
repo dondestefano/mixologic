@@ -41,6 +41,7 @@
                 android:inputType="text"
                 android:imeOptions="actionDone"
                 android:maxLines="1"
+                android:hint="@string/hint_search"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/organizeButton"/>
 

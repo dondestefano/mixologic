@@ -12,6 +12,7 @@ import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.FirebaseManager
 import com.example.mixologic.managers.LikeManager
 import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
@@ -22,6 +23,24 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
             .fit()
             .centerCrop()
             .into(view)
+    } else {
+        val profileIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_drink)
+        view.setImageDrawable(profileIcon)
+    }
+}
+
+@BindingAdapter("imageCircleFromUrl")
+fun bindCircleImageFromUrl(view: CircleImageView, imageUrl: String?) {
+    if (!imageUrl.isNullOrEmpty()) {
+        Picasso
+            .get()
+            .load(imageUrl)
+            .fit()
+            .centerCrop()
+            .into(view)
+    } else {
+        val profileIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_profile)
+        view.setImageDrawable(profileIcon)
     }
 }
 
@@ -49,14 +68,33 @@ fun getUserName(view: TextView, id: String?) {
             view.text = AccountManager.getUsername()
         } else {
             FirebaseManager.getUsersUserData(id)
-                    .document("info")
-                    .addSnapshotListener { value, error ->
-                        if (value != null) {
-                            val userData = value.toObject(UserData::class.java)
-                                    ?: AccountManager.getDefaultData()
-                            view.text = userData.name
-                        }
+                .document("info")
+                .addSnapshotListener { value, error ->
+                    if (value != null) {
+                        val userData = value.toObject(UserData::class.java)
+                            ?: AccountManager.getDefaultData()
+                        view.text = userData.name
                     }
+                }
+        }
+    }
+}
+
+@BindingAdapter("getUserProfileImage")
+fun getUserProfileImage(view: CircleImageView, id: String?) {
+    if (id != null) {
+        if (id == AccountManager.getUser().uid) {
+            bindCircleImageFromUrl(view, AccountManager.getUserdata().profileImageURL)
+        } else {
+            FirebaseManager.getUsersUserData(id)
+                .document("info")
+                .addSnapshotListener { value, error ->
+                    if (value != null) {
+                        val userData = value.toObject(UserData::class.java)
+                            ?: AccountManager.getDefaultData()
+                        bindCircleImageFromUrl(view, userData.profileImageURL)
+                    }
+                }
         }
     }
 }
