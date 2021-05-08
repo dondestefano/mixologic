@@ -5,7 +5,10 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.mixologic.R
+import com.example.mixologic.application.MixologicApplication
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navigationViewPager : ViewPager
@@ -73,6 +76,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onDestroy() {
+        GlobalScope.launch {
+            (application as MixologicApplication).dataRepository.deleteDataFromCache()
+        }
+        super.onDestroy()
     }
 
 }
