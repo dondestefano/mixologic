@@ -1,27 +1,27 @@
 package com.example.mixologic.data.room
 
-import com.example.mixologic.data.CachedImage
+import com.example.mixologic.data.CachedData
 
-class ImageRepository(private val imageCacheDao: ImageCacheDao) {
-    var cachedImages = listOf<CachedImage>()
+class DataRepository(private val dataCacheDao: DataCacheDao) {
+    var cachedData = listOf<CachedData>()
 
-    fun getCachedImages() {
-        cachedImages = imageCacheDao.getAll()
+    fun getCachedData() {
+        cachedData = dataCacheDao.getAll()
     }
 
-    suspend fun saveImageToCache(cachedImage: CachedImage) {
-        imageCacheDao.insert(cachedImage)
-        getCachedImages()
+    suspend fun saveDataToCache(cachedData: CachedData) {
+        dataCacheDao.insert(cachedData)
+        getCachedData()
     }
 
-    suspend fun deleteImagesFromCache(){
-        imageCacheDao.deleteAll()
+    suspend fun deleteDataFromCache(){
+        dataCacheDao.deleteAll()
     }
 
-    fun getImage(userId: String): CachedImage? {
-        cachedImages.forEachIndexed { _, image ->
-            if (image.id == userId) {
-                return image
+    fun getData(userId: String): CachedData? {
+        cachedData.forEachIndexed { _, data ->
+            if (data.id == userId) {
+                return data
             }
         }
         return null
