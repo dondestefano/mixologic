@@ -25,8 +25,9 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
             .centerCrop()
             .into(view)
     } else {
-        val profileIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_drink)
-        view.setImageDrawable(profileIcon)
+        val drinkIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_drink)
+        drinkIcon!!.setTint(ContextCompat.getColor(view.context, R.color.white))
+        view.setImageDrawable(drinkIcon)
     }
 }
 

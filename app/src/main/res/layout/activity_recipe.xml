@@ -65,9 +65,10 @@
                     <ImageView
                         android:id="@+id/drinkImageView"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="250dp"
                         android:src="@drawable/ic_drink"
                         android:layout_marginTop="8dp"
+                        android:background="@color/mango"
                         app:layout_constraintTop_toTopOf="parent"
                         app:imageFromUrl="@{recipe.imageURL}" />
 
