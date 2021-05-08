@@ -60,8 +60,7 @@
                 android:visibility="@{recipe.liquors.size() > 0 ? View.VISIBLE : View.GONE}"
                 app:list="@{recipe.liquors}"
                 app:liquor="@{true}"
-                android:textColor="@color/salmon"
-                android:layout_marginTop="8dp"/>
+                android:textColor="@color/salmon"/>
 
             <TextView
                 android:id="@+id/ingredientsTextView"
