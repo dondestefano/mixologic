@@ -18,71 +18,73 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/drinkCardContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/edit_text">
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/drinkImageView"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_drink"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/interactionContainer"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/edit_text"
-        app:imageFromUrl="@{recipe.imageURL}" />
+        <ImageView
+            android:id="@+id/drinkImageView"
+            android:layout_width="120dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_drink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/mango"
+            app:imageFromUrl="@{recipe.imageURL}" />
 
-    <LinearLayout
-        android:id="@+id/infoContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/drinkImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/drinkImageView"
-        android:layout_marginStart="8dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/drinkNameTextView"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/infoContainer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{recipe.name}"
-            android:textSize="25sp"
-            android:textColor="@color/black"/>
+            app:layout_constraintTop_toTopOf="@id/drinkImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/drinkImageView"
+            android:padding="8dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/liquorsTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:visibility="@{recipe.liquors.size() > 0 ? View.VISIBLE : View.GONE}"
-            app:list="@{recipe.liquors}"
-            app:liquor="@{true}"
-            android:textColor="@color/salmon"
-            android:layout_marginTop="8dp"/>
+            <TextView
+                android:id="@+id/drinkNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{recipe.name}"
+                android:textSize="25sp"
+                android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/ingredientsTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:visibility="@{recipe.ingredients.size() > 0 ? View.VISIBLE : View.GONE}"
-            app:list="@{recipe.ingredients}"
-            app:liquor="@{false}"
-            android:textColor="@color/turquoise"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/liquorsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:visibility="@{recipe.liquors.size() > 0 ? View.VISIBLE : View.GONE}"
+                app:list="@{recipe.liquors}"
+                app:liquor="@{true}"
+                android:textColor="@color/salmon"
+                android:layout_marginTop="8dp"/>
 
+            <TextView
+                android:id="@+id/ingredientsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:visibility="@{recipe.ingredients.size() > 0 ? View.VISIBLE : View.GONE}"
+                app:list="@{recipe.ingredients}"
+                app:liquor="@{false}"
+                android:textColor="@color/turquoise"/>
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/interactionContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drinkImageView">
+            android:padding="8dp"
+            app:layout_constraintStart_toEndOf="@id/drinkImageView"
+            app:layout_constraintBottom_toBottomOf="@id/drinkImageView"
+            app:layout_constraintEnd_toEndOf="parent" >
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/creatorImageView"
@@ -97,11 +99,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/creatorImageView"
+                app:layout_constraintEnd_toStartOf="@id/likeButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/black"
                 app:getUserName="@{recipe.creatorId}"
                 android:layout_marginStart="8dp"/>
 
@@ -126,6 +131,13 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/titleDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@id/interactionContainer"
+            android:layout_marginVertical="16dp"
+            android:background="@color/black"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
