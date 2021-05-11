@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="recipe"
             type="com.example.mixologic.data.Recipe"/>
@@ -65,9 +67,10 @@
                     <ImageView
                         android:id="@+id/drinkImageView"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="250dp"
                         android:src="@drawable/ic_drink"
                         android:layout_marginTop="8dp"
+                        android:background="@color/mango"
                         app:layout_constraintTop_toTopOf="parent"
                         app:imageFromUrl="@{recipe.imageURL}" />
 
@@ -128,9 +131,10 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/interactionContainer"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginVertical="16dp"
+                        android:layout_marginVertical="8dp"
                         android:textSize="20sp"
-                        android:text="@string/liquors" />
+                        android:text="@string/liquors"
+                        android:visibility="@{recipe.liquors.size() > 0 ? View.VISIBLE : View.GONE}" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -140,7 +144,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/liquorsTitle"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp"
+                        android:visibility="@{recipe.liquors.size() > 0 ? View.VISIBLE : View.GONE}" />
 
                     <TextView
                         android:id="@+id/ingredientsTitle"
@@ -148,9 +153,10 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/liquorsRecyclerView"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginVertical="16dp"
+                        android:layout_marginVertical="8dp"
                         android:textSize="20sp"
-                        android:text="@string/ingredients" />
+                        android:text="@string/ingredients"
+                        android:visibility="@{recipe.ingredients.size() > 0 ? View.VISIBLE : View.GONE}" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/ingredientsRecyclerView"
@@ -159,7 +165,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/ingredientsTitle"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="8dp"
+                        android:visibility="@{recipe.ingredients.size() > 0 ? View.VISIBLE : View.GONE}" />
 
                     <TextView
                         android:id="@+id/instructionsTitle"
@@ -167,7 +174,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/ingredientsRecyclerView"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginVertical="16dp"
+                        android:layout_marginVertical="8dp"
                         android:textSize="20sp"
                         android:text="@string/instructions" />
 
