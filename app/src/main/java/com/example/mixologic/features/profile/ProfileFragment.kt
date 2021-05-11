@@ -1,22 +1,33 @@
 package com.example.mixologic.features.profile
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
+import com.example.mixologic.application.MixologicApplication
 import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Recipe
+import com.example.mixologic.features.login.LoginActivity
 import com.example.mixologic.features.recipe.RECIPE_KEY
 import com.example.mixologic.features.recipe.RecipeActivity
 import com.example.mixologic.features.search.DrinkAdapter
+import com.example.mixologic.features.settings.SettingsActivity
+import com.example.mixologic.managers.AccountManager
+import com.example.mixologic.managers.LiquorManager
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.content_profile.*
 
 class ProfileFragment : Fragment() {
     private val profileViewModel: ProfileViewModel by viewModels()
@@ -26,6 +37,8 @@ class ProfileFragment : Fragment() {
     private lateinit var profileTitle: TextView
     private lateinit var pantryInfo: TextView
     private lateinit var recipeInfo: TextView
+    private lateinit var saveChangesButton: Button
+    private lateinit var settingsButton: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,12 +55,15 @@ class ProfileFragment : Fragment() {
         pantryInfo = view.findViewById(R.id.pantryInfoTextView)
         recipeInfo = view.findViewById(R.id.recipeInfoTextView)
         profileRecipesRecyclerView = view.findViewById(R.id.profileRecipesRecyclerView)
+        saveChangesButton = view.findViewById(R.id.saveChangesButton)
+        settingsButton = view.findViewById(R.id.settingsButton)
 
         initRecyclerView()
         observeViewModel()
+        initButtons()
 
-        profileTitle.text = profileViewModel.username
         profileViewModel.fetchUsersRecipes()
+        loadProfile()
     }
 
     private fun initRecyclerView() {
@@ -63,22 +79,103 @@ class ProfileFragment : Fragment() {
         profileRecipesRecyclerView.adapter = drinkAdapter
     }
 
+    private fun initButtons() {
+        profilePictureImageView.setOnClickListener{
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            resultLauncher.launch(intent)
+        }
+
+        saveChangesButton.setOnClickListener{
+            profileViewModel.saveProfilePicture((activity?.application as MixologicApplication))
+        }
+
+        settingsButton.setOnClickListener {
+            val intent = Intent(activity, SettingsActivity::class.java)
+            resultLauncher.launch(intent)
+        }
+    }
+
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            val data: Intent? = result.data
+            if (data != null) {
+                profileViewModel.imageURL = data.data!!
+
+                Picasso
+                    .get()
+                    .load(profileViewModel.imageURL)
+                    .fit()
+                    .centerCrop()
+                    .into(profilePictureImageView)
+
+                saveChangesButton.visibility = View.VISIBLE
+            }
+        }
+
+        if (result.resultCode == 66) {
+            val intent = Intent (activity, LoginActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
+    }
+
     private fun observeViewModel() {
         profileViewModel.recipeState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 FetchState.SUCCESS -> {
                     drinkAdapter.updateItemsToList(profileViewModel.userRecipes)
+                    loadProfile()
                 }
                 else -> {}
             }
 
         })
+
+        profileViewModel.imageState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                ImageState.SUCCESS -> {
+                    loadProfile()
+                    saveChangesButton.visibility = View.GONE
+                }
+                else -> {}
+            }
+        })
+    }
+
+    private fun loadProfile() {
+        profileTitle.text = profileViewModel.username
+        recipeInfo.text = String.format(resources.getString(R.string.profile_recipe), profileViewModel.userRecipes.size.toString())
+        pantryInfo.text = String.format(resources.getString(R.string.profile_pantry), LiquorManager.getPantry().size.toString())
+
+        if (profileViewModel.imageURL != null) {
+            Picasso
+                .get()
+                .load(profileViewModel.imageURL)
+                .fit()
+                .centerCrop()
+                .into(profilePictureImageView)
+        }
+        else if (!AccountManager.getUserdata().profileImageURL.isNullOrEmpty()) {
+            Picasso
+                .get()
+                .load(AccountManager.getUserdata().profileImageURL)
+                .fit()
+                .centerCrop()
+                .into(profilePictureImageView)
+        }
     }
 
     private fun goToRecipeActivity(recipe: Recipe) {
         val recipeIntent = Intent(activity, RecipeActivity::class.java)
         recipeIntent.putExtra(RECIPE_KEY, recipe)
         startActivity(recipeIntent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadProfile()
     }
 
     companion object {

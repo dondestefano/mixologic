@@ -5,9 +5,11 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
 
 object FirebaseManager {
     private val database = FirebaseFirestore.getInstance()
+    private val cloudStorage = FirebaseStorage.getInstance()
 
     fun getRecipeDatabase(): CollectionReference {
         return database.collection("recipes")
@@ -43,5 +45,9 @@ object FirebaseManager {
 
     fun getLikedRecipes(): Query {
         return getRecipeDatabase().whereArrayContains("likes", Like(AccountManager.getUser().uid))
+    }
+
+    fun getStorage(): FirebaseStorage {
+        return cloudStorage
     }
 }

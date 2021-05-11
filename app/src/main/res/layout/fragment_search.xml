@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/drinks"
             android:textSize="25sp"
-            android:textColor="@color/mango"
+            android:textColor="@color/salmon"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
@@ -41,6 +41,7 @@
                 android:inputType="text"
                 android:imeOptions="actionDone"
                 android:maxLines="1"
+                android:hint="@string/hint_search"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/organizeButton"/>
 

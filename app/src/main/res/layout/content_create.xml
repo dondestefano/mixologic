@@ -14,6 +14,14 @@
             android:layout_height="match_parent"
             android:padding="16dp">
 
+            <ImageView
+                android:id="@+id/uploadImageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_add_photo"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/edit_text"/>
+
             <EditText
                 android:id="@+id/drinkNameEditText"
                 android:layout_width="match_parent"
@@ -21,7 +29,9 @@
                 android:inputType="text"
                 android:imeOptions="actionDone"
                 android:maxLines="1"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/uploadImageView"
                 app:layout_constraintStart_toStartOf="parent"
                 android:hint="@string/enter_drink_name"
                 android:padding="8dp"

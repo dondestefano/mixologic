@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mixologic.R
 import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Recipe
-import com.example.mixologic.features.main.MainActivity
 import com.example.mixologic.features.recipe.RECIPE_KEY
 import com.example.mixologic.features.recipe.RecipeActivity
 

@@ -5,13 +5,15 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.example.mixologic.R
-import com.example.mixologic.data.Ingredient
-import com.example.mixologic.data.Recipe
-import com.example.mixologic.data.UserData
+import com.example.mixologic.application.MixologicApplication
+import com.example.mixologic.data.*
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.FirebaseManager
 import com.example.mixologic.managers.LikeManager
 import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
@@ -22,6 +24,25 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
             .fit()
             .centerCrop()
             .into(view)
+    } else {
+        val drinkIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_drink)
+        drinkIcon!!.setTint(ContextCompat.getColor(view.context, R.color.white))
+        view.setImageDrawable(drinkIcon)
+    }
+}
+
+@BindingAdapter("imageCircleFromUrl")
+fun bindCircleImageFromUrl(view: CircleImageView, imageUrl: String?) {
+    if (!imageUrl.isNullOrEmpty()) {
+        Picasso
+            .get()
+            .load(imageUrl)
+            .fit()
+            .centerCrop()
+            .into(view)
+    } else {
+        val profileIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_profile)
+        view.setImageDrawable(profileIcon)
     }
 }
 
@@ -45,18 +66,59 @@ fun appendIngredientsFromList(view: TextView, list: List<Ingredient>, liquor: Bo
 @BindingAdapter("getUserName")
 fun getUserName(view: TextView, id: String?) {
     if (id != null) {
+        val application = view.context.applicationContext as MixologicApplication
+        val cachedData = application.dataRepository.getData(id)
+
         if (id == AccountManager.getUser().uid) {
             view.text = AccountManager.getUsername()
         } else {
-            FirebaseManager.getUsersUserData(id)
-                    .document("info")
-                    .addSnapshotListener { value, error ->
-                        if (value != null) {
-                            val userData = value.toObject(UserData::class.java)
-                                    ?: AccountManager.getDefaultData()
-                            view.text = userData.name
+            if (cachedData != null) {
+                view.text = cachedData.profileName
+            } else {
+                FirebaseManager.getUsersUserData(id)
+                        .document("info")
+                        .addSnapshotListener { value, error ->
+                            if (value != null) {
+                                val userData = value.toObject(UserData::class.java) ?: AccountManager.getDefaultData()
+                                view.text = userData.name
+
+                                GlobalScope.launch {
+                                    val dataToCache = CachedData(id, userData.name, userData.profileImageURL)
+                                    application.dataRepository.saveDataToCache(dataToCache)
+                                }
+                            }
                         }
-                    }
+            }
+        }
+    }
+}
+
+@BindingAdapter("getUserProfileImage")
+fun getUserProfileImage(view: CircleImageView, id: String?) {
+    if (id != null) {
+        val application = view.context.applicationContext as MixologicApplication
+        val cachedData = application.dataRepository.getData(id)
+
+        if (id == AccountManager.getUser().uid) {
+            bindCircleImageFromUrl(view, AccountManager.getUserdata().profileImageURL)
+        } else {
+            if (cachedData != null) {
+                bindCircleImageFromUrl(view, cachedData.profileImageURL)
+            } else {
+                FirebaseManager.getUsersUserData(id)
+                        .document("info")
+                        .addSnapshotListener { value, error ->
+                            if (value != null) {
+                                val userData = value.toObject(UserData::class.java) ?: AccountManager.getDefaultData()
+                                bindCircleImageFromUrl(view, userData.profileImageURL)
+
+                                GlobalScope.launch {
+                                    val dataToCache = CachedData(id, userData.name, userData.profileImageURL)
+                                    application.dataRepository.saveDataToCache(dataToCache)
+                                }
+                            }
+                        }
+            }
         }
     }
 }

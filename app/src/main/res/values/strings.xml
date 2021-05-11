@@ -11,6 +11,7 @@
     <string name="create_drink">Create drink</string>
     <string name="favourites">Favourites</string>
     <string name="pantry">Pantry</string>
+    <string name="settings">Settings</string>
 
     <!-- Prompts -->
     <string name="enter_drink_name">Drink name...</string>
@@ -19,6 +20,7 @@
     <string name="add_ingredient">Add ingredient</string>
     <string name="set_ingredient">Ingredient...</string>
     <string name="set_amount">Amount...</string>
+    <string name="hint_search">Search...</string>
 
     <!-- Buttons -->
     <string name="submit">Submit</string>
@@ -37,5 +39,9 @@
     <string name="sort_by_favourite">Sort by likes</string>
     <string name="sort_by_name_az">Sort by A-Z</string>
     <string name="sort_by_name_za">Sort by Z-A</string>
+
+    <!-- Profile -->
+    <string name="profile_pantry">Pantry: %s</string>
+    <string name="profile_recipe">Recipes: %s</string>
 
 </resources>

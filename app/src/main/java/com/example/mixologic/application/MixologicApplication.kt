@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.mixologic.data.room.DataRepository
 import com.example.mixologic.data.room.FavouriteRepository
 import com.example.mixologic.data.room.RecipeCacheDatabase
 import com.example.mixologic.managers.LikeManager
@@ -17,6 +18,8 @@ class MixologicApplication: Application() {
     private val database by lazy { RecipeCacheDatabase.getInstance(this, applicationScope) }
 
     val favouriteRepository by lazy { FavouriteRepository(database.recipeCacheDao) }
+    val dataRepository by lazy { DataRepository(database.dataCacheDao) }
+
     private var isNetworkConnected = false
 
     @RequiresApi(Build.VERSION_CODES.N)
