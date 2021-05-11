@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch {
             (application as MixologicApplication).dataRepository.deleteDataFromCache()
         }
+
         super.onDestroy()
     }
 

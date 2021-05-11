@@ -1,6 +1,5 @@
 package com.example.mixologic.managers
 
-import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Ingredient
 
 object LiquorManager {
