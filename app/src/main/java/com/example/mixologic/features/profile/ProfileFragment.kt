@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -18,9 +19,11 @@ import com.example.mixologic.R
 import com.example.mixologic.application.MixologicApplication
 import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Recipe
+import com.example.mixologic.features.login.LoginActivity
 import com.example.mixologic.features.recipe.RECIPE_KEY
 import com.example.mixologic.features.recipe.RecipeActivity
 import com.example.mixologic.features.search.DrinkAdapter
+import com.example.mixologic.features.settings.SettingsActivity
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.LiquorManager
 import com.squareup.picasso.Picasso
@@ -35,6 +38,7 @@ class ProfileFragment : Fragment() {
     private lateinit var pantryInfo: TextView
     private lateinit var recipeInfo: TextView
     private lateinit var saveChangesButton: Button
+    private lateinit var settingsButton: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +56,7 @@ class ProfileFragment : Fragment() {
         recipeInfo = view.findViewById(R.id.recipeInfoTextView)
         profileRecipesRecyclerView = view.findViewById(R.id.profileRecipesRecyclerView)
         saveChangesButton = view.findViewById(R.id.saveChangesButton)
+        settingsButton = view.findViewById(R.id.settingsButton)
 
         initRecyclerView()
         observeViewModel()
@@ -84,6 +89,11 @@ class ProfileFragment : Fragment() {
         saveChangesButton.setOnClickListener{
             profileViewModel.saveProfilePicture((activity?.application as MixologicApplication))
         }
+
+        settingsButton.setOnClickListener {
+            val intent = Intent(activity, SettingsActivity::class.java)
+            resultLauncher.launch(intent)
+        }
     }
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -102,6 +112,12 @@ class ProfileFragment : Fragment() {
 
                 saveChangesButton.visibility = View.VISIBLE
             }
+        }
+
+        if (result.resultCode == 66) {
+            val intent = Intent (activity, LoginActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
     }
 
