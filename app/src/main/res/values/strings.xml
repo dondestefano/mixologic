@@ -11,6 +11,7 @@
     <string name="create_drink">Create drink</string>
     <string name="favourites">Favourites</string>
     <string name="pantry">Pantry</string>
+    <string name="settings">Settings</string>
 
     <!-- Prompts -->
     <string name="enter_drink_name">Drink name...</string>
