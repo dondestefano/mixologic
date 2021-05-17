@@ -151,5 +151,6 @@ class SearchFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         val recipeIntent = Intent(activity, RecipeActivity::class.java)
         recipeIntent.putExtra(RECIPE_KEY, recipe)
         startActivity(recipeIntent)
+        activity?.overridePendingTransition(R.anim.slide_left, R.anim.stay)
     }
 }

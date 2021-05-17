@@ -53,4 +53,14 @@ class SignupActivity : AppCompatActivity() {
             }
         })
     }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.stay, R.anim.slide_right)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.stay, R.anim.slide_right)
+    }
 }

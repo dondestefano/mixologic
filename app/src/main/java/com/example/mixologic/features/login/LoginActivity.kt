@@ -63,11 +63,12 @@ class LoginActivity : AppCompatActivity() {
     private fun startSignupActivity() {
         val intent = Intent(this, SignupActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_left, R.anim.stay)
     }
 
     private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.fade_in, R.anim.stay)
     }
-
 }

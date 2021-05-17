@@ -39,11 +39,13 @@ class SplashActivity : AppCompatActivity() {
             when (it) {
                 FetchState.SUCCESS -> {
                     startActivity(loggedInIntent)
+                    overridePendingTransition(R.anim.fade_in, R.anim.stay)
                     finish()
                 }
                 FetchState.ERROR -> {
                     AccountManager.getAuth().signOut()
                     startActivity(notLoggedInIntent)
+                    overridePendingTransition(R.anim.fade_in, R.anim.stay)
                     finish()
                 }
                 else -> {}
