@@ -15,8 +15,8 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 class LoginActivityTest {
-    val testAccount = "tom@tom.tom"
-    val testPassword = "tom123"
+    private val testAccount = "tom@tom.tom"
+    private val testPassword = "tom123"
 
     @Before
     fun setUp() {
