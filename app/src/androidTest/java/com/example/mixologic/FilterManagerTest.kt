@@ -41,8 +41,9 @@ class FilterManagerTest {
             "Drink 3",
             "Stir",
             listOf(
-                    Ingredient("Vodka", 10, "ml"),
-                    Ingredient("Rum", 16, "ml")
+                    Ingredient("Vodka", 1, "cl"),
+                    Ingredient("Rum", 16, "dl"),
+                    Ingredient("Aquavit", 24, "ml")
             ),
             listOf(Ingredient("Sprite", 33, "cl")),
             "User",
@@ -55,10 +56,11 @@ class FilterManagerTest {
     )
 
     private val vodka = Ingredient("Vodka", 10, "ml")
-    private val rum = Ingredient("Rum", 18, "ml")
+    private val rum = Ingredient("Rum", 1800, "ml")
+    private val aquavit = Ingredient("Aquavit", 24, "ml")
 
     private val list = listOf(recipe1, recipe2, recipe3)
-    private val pantry = listOf(vodka, rum)
+    private val pantry = listOf(vodka, rum, aquavit)
     private val filterManager = FilterManager(list)
 
     @Test

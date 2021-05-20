@@ -33,7 +33,7 @@ class FilterManager(val originalList: List<Recipe>) {
                 }
 
                 userPantry.forEach { userLiquor ->
-                    if (liquor.name == userLiquor.name && liquor.amount!! <= userLiquor.amount!!) {
+                    if (liquor.name == userLiquor.name && convertedAmount(liquor, userLiquor.unit!!)!! <= userLiquor.amount!!) {
                         Log.d("!!!", "${userLiquor.name} was ${liquor.name} which is ${index+1} of ${recipe.liquors.size} for ${recipe.name}")
                         userHasIngredient = true
                         return@lit
@@ -46,5 +46,37 @@ class FilterManager(val originalList: List<Recipe>) {
         }
 
         return userHasIngredient
+    }
+
+    private fun convertedAmount(liquor: Ingredient, unit: String): Int? {
+        if (liquor.unit == unit) {
+            return liquor.amount
+        } else {
+            if(unit == "ml") {
+                if (liquor.unit == "cl") {
+                    return liquor.amount?.times(10)
+                }
+                else if (liquor.unit == "dl") {
+                    return liquor.amount?.times(100)
+                }
+            }
+            else if(unit == "cl") {
+                if (liquor.unit == "ml") {
+                    return liquor.amount?.div(10)
+                }
+                else if (liquor.unit == "dl") {
+                    return liquor.amount?.times(10)
+                }
+            }
+            else if(unit == "dl") {
+                if (liquor.unit == "ml") {
+                    return liquor.amount?.times(100)
+                }
+                else if (liquor.unit == "dl") {
+                    return liquor.amount?.times(10)
+                }
+            }
+        }
+        return 0
     }
 }
