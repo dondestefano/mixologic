@@ -12,7 +12,7 @@ class FilterManagerTest {
             "1",
             "Drink 1",
             "Mix",
-            listOf(Ingredient("Vodka", 16, "ml")),
+            listOf(Ingredient("Vodka", 2, "cl")),
             listOf(Ingredient("Orange juice",160, "ml")),
             "User",
             null,
