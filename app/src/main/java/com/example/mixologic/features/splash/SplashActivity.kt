@@ -1,4 +1,4 @@
-package com.example.mixologic.features.login
+package com.example.mixologic.features.splash
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.mixologic.R
+import com.example.mixologic.features.login.LoginActivity
 import com.example.mixologic.features.main.MainActivity
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.LiquorManager

@@ -1,4 +1,4 @@
-package com.example.mixologic.features.login
+package com.example.mixologic.features.signup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

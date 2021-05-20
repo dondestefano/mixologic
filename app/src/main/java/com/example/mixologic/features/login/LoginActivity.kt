@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.mixologic.R
 import com.example.mixologic.features.main.MainActivity
+import com.example.mixologic.features.signup.SignupActivity
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels()

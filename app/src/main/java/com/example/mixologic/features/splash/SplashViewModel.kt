@@ -1,4 +1,4 @@
-package com.example.mixologic.features.login
+package com.example.mixologic.features.splash
 
 import android.content.Context
 import android.widget.Toast
