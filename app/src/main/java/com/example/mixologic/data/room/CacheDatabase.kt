@@ -9,25 +9,25 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Recipe::class, CachedData::class], version = 4)
+@Database(entities = [Recipe::class, CachedData::class], version = 5)
 @TypeConverters(Converters::class)
-abstract class RecipeCacheDatabase: RoomDatabase() {
+abstract class CacheDatabase: RoomDatabase() {
     abstract val recipeCacheDao: RecipeCacheDao
     abstract val dataCacheDao: DataCacheDao
 
     companion object {
         @Volatile
-        private var INSTANCE: RecipeCacheDatabase? = null
+        private var INSTANCE: CacheDatabase? = null
 
-        fun getInstance(context: Context, scope: CoroutineScope): RecipeCacheDatabase {
+        fun getInstance(context: Context, scope: CoroutineScope): CacheDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                         context.applicationContext,
-                        RecipeCacheDatabase::class.java,
+                        CacheDatabase::class.java,
                         "place_database"
                 )
                         .fallbackToDestructiveMigration()
-                        .addCallback(RecipeCacheDatabaseCallback(scope))
+                        .addCallback(CacheDatabaseCallback(scope))
                         .build()
                 INSTANCE = instance
                 // return instance
@@ -36,7 +36,7 @@ abstract class RecipeCacheDatabase: RoomDatabase() {
         }
 
         // Create the database if it doesn't exist.
-        private class RecipeCacheDatabaseCallback(private val scope: CoroutineScope) : RoomDatabase.Callback() {
+        private class CacheDatabaseCallback(private val scope: CoroutineScope) : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 INSTANCE?.let { database ->
