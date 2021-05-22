@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.mixologic.data.room.CacheDatabase
 import com.example.mixologic.data.room.DataRepository
 import com.example.mixologic.data.room.FavouriteRepository
@@ -26,6 +27,7 @@ class MixologicApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         registerNetworkCallback(applicationContext)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         LikeManager.application = this
     }
