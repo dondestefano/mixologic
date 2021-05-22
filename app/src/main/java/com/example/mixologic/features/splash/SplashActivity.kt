@@ -24,12 +24,13 @@ class SplashActivity : AppCompatActivity() {
         notLoggedInIntent = Intent(this, LoginActivity::class.java)
 
         observeViewModel()
-        LiquorManager.fetchLiquors()
 
         if (AccountManager.getAuth().currentUser == null) {
             startActivity(notLoggedInIntent)
             finish()
         } else {
+            LiquorManager.fetchLiquors()
+            LiquorManager.fetchUnits()
             AccountManager.setUser()
             splashViewModel.fetchUserData(this)
         }
