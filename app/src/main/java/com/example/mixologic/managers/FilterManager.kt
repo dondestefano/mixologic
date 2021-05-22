@@ -3,6 +3,7 @@ package com.example.mixologic.managers
 import android.util.Log
 import com.example.mixologic.data.Ingredient
 import com.example.mixologic.data.Recipe
+import java.util.*
 
 class FilterManager(val originalList: List<Recipe>) {
     fun filterByPantry(userPantry: List<Ingredient>): List<Recipe> {
@@ -15,7 +16,7 @@ class FilterManager(val originalList: List<Recipe>) {
 
     fun filterByKeyword(keyword: String): List<Recipe> {
         val filterBySearch = { recipe: Recipe ->
-            recipe.name?.contains(keyword)!!
+            recipe.name?.toLowerCase(Locale.ROOT)?.contains(keyword.toLowerCase(Locale.ROOT))!!
         }
 
         return originalList.filter(filterBySearch)
