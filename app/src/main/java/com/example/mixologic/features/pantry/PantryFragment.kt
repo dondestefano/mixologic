@@ -16,6 +16,7 @@ import com.example.mixologic.R
 import com.example.mixologic.data.FetchState
 import com.example.mixologic.data.Ingredient
 import com.example.mixologic.features.create.IngredientAdapter
+import com.example.mixologic.features.popup.EditPantryPopup
 import com.example.mixologic.managers.LiquorManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -55,9 +56,15 @@ class PantryFragment : Fragment() {
         pantryAdapter = IngredientAdapter(true, editable = true)
         pantryRecyclerView?.adapter = pantryAdapter
 
-        pantryAdapter.onDeleteListener = {ingredient ->
+        pantryAdapter.onDeleteListener = { ingredient ->
             if (ingredient != null) {
                 onDelete(ingredient)
+            }
+        }
+
+        pantryAdapter.onClickListener = { ingredient ->
+            if (ingredient != null) {
+                editIngredient(ingredient)
             }
         }
     }
@@ -96,8 +103,8 @@ class PantryFragment : Fragment() {
 
 
         unitSpinner.adapter = activity?.let {
-                ArrayAdapter(it, android.R.layout.simple_list_item_1, LiquorManager.getUnits())
-            }
+            ArrayAdapter(it, android.R.layout.simple_list_item_1, LiquorManager.getUnits())
+        }
 
         cancelButton.setOnClickListener {
             popupWindow.dismiss()
@@ -136,6 +143,20 @@ class PantryFragment : Fragment() {
 
     private fun onDelete(ingredient: Ingredient) {
         pantryViewModel.deletePantryItem(ingredient)
+    }
+
+    private fun editIngredient(ingredient: Ingredient) {
+        val editPopup = EditPantryPopup(ingredient)
+
+        activity?.let {
+            pantryRecyclerView?.let { view ->
+                editPopup.showPopup(
+                        it,
+                        pantryViewModel,
+                        view
+                )
+            }
+        }
     }
 
     companion object {
