@@ -5,7 +5,7 @@ import com.example.mixologic.data.Ingredient
 object LiquorManager {
     private var liquors = mutableListOf<String>()
     private var pantryList = listOf<Ingredient>()
-    private var units = listOf("ml", "cl", "dl", "st")
+    private var units = mutableListOf<String>()
 
     fun fetchLiquors() {
         liquors.clear()
@@ -14,6 +14,18 @@ object LiquorManager {
                 val liquor = item.toObject(Ingredient::class.java)
                 liquor.name?.let {
                     liquors.add(it)
+                }
+            }
+        }
+    }
+
+    fun fetchUnits() {
+        units.clear()
+        FirebaseManager.getUnitDatabase().addSnapshotListener{ value, error ->
+            value?.forEachIndexed { _, item ->
+                val liquor = item.toObject(Ingredient::class.java)
+                liquor.unit?.let {
+                    units.add(it)
                 }
             }
         }

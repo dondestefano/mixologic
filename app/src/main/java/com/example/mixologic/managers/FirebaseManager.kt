@@ -43,6 +43,10 @@ object FirebaseManager {
         return database.collection("liquors")
     }
 
+    fun getUnitDatabase(): CollectionReference {
+        return database.collection("units")
+    }
+
     fun getLikedRecipes(): Query {
         return getRecipeDatabase().whereArrayContains("likes", Like(AccountManager.getUser().uid))
     }
