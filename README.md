@@ -27,6 +27,14 @@ The following packages are considered to need further explanation:
 - ['./features/main'](https://github.com/dondestefano/mixologic/tree/develop/app/src/main/java/com/example/mixologic/features/main): The Main feature is the wrapper for the applications logged in state. The MainActivity displays the applications other main features as fragments inside its viewpager using the NavigationAdapter.
 - ['./data/room'](https://github.com/dondestefano/mixologic/tree/develop/app/src/main/java/com/example/mixologic/data/room): The package for Room contains repositories, DAO:s and the RoomDatabase (called CacheDatabase) that the application uses to cache data.
 
+### Resource handling
+The application uses its resource folders as follows:
+- ['mixologic/app/src/main/res/layout'](https://github.com/dondestefano/mixologic/tree/develop/app/src/main/res/layout): Layout files are named in the following pattern class_feature. Files named content_feature are meant to simplify editing by separating the content and include it in its class shell.
+- ['mixologic/app/src/main/res/drawable'](https://github.com/dondestefano/mixologic/tree/develop/app/src/main/res/drawable): Contains the applications icons and logos.
+- ['mixologic/app/src/main/res/values'](https://github.com/dondestefano/mixologic/tree/develop/app/src/main/res/values): Contains resource files for strings, colors and themes.
+- ['mixologic/app/src/main/res/menu'](https://github.com/dondestefano/mixologic/tree/develop/app/src/main/res/menu): Contains menu files for MainActivity's navigation and SearchFragments sorting menu.
+- ['mixologic/app/src/main/res/anim'](https://github.com/dondestefano/mixologic/tree/develop/app/src/main/res/anim): Contains resource files for animations used when transitioning between activities.
+
 ## Authors
 
 Contributor name and contact info
