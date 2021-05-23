@@ -8,8 +8,9 @@ object LiquorManager {
     private var units = mutableListOf<String>()
 
     fun fetchLiquors() {
-        liquors.clear()
+
         FirebaseManager.getLiquorDatabase().addSnapshotListener{ value, error ->
+            liquors.clear()
             value?.forEachIndexed { _, item ->
                 val liquor = item.toObject(Ingredient::class.java)
                 liquor.name?.let {
@@ -20,8 +21,8 @@ object LiquorManager {
     }
 
     fun fetchUnits() {
-        units.clear()
         FirebaseManager.getUnitDatabase().addSnapshotListener{ value, error ->
+            units.clear()
             value?.forEachIndexed { _, item ->
                 val liquor = item.toObject(Ingredient::class.java)
                 liquor.unit?.let {
