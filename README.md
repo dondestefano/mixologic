@@ -13,16 +13,19 @@ Mixologic sought to provide an easy to use experience where mixologists could sh
 ## Project file structure
 
 ### Main structure
-The project is separated into four main packages. These are:
-- './app/src/main/java/com/example/mixologic/application' : Contains the custom application class.
-- './app/src/main/java/com/example/mixologic/data : Contains the applications data classes.
-- './app/src/main/java/com/example/mixologic/features : Contains the applications features. Each feature is its own screen in the application and its package contains its activity or fragment, viewmodel and eventual adapter.
-- './app/src/main/java/com/example/mixologic/managers : Contains the applications managers. These are used to handle fetches from databases, encrypt and sort.
+The project is separated into four main packages (all located in 'mixologic/app/src/main/java/com/example/mixologic'). 
+These are:
 
-### Specific features
-The following features are considered to need further explanation:
-- './app/src/main/java/com/example/mixologic/features/splash' : The SplashActivity is launched upon application start. Its role is to determine the users logged in status and either direct to MainActivity if the user is logged in or LoginActivity if he/she isn't.
-- './app/src/main/java/com/example/mixologic/features/main' : The Main feature is the wrapper for the applications logged in state. The MainActivity displays the applications other main features as fragments inside its viewpager.
+- './application': Contains the custom application class.
+- './data: Contains the applications data classes.
+- './features: Contains the applications features. Each feature is its own screen in the application and its package contains its activity or fragment, viewmodel and eventual adapter.
+- './managers: Contains the applications managers. These are used to handle fetches from databases, encrypt and sort.
+
+### Specific packages
+The following packages are considered to need further explanation:
+- './features/splash' : The SplashActivity is launched upon application start. Its role is to determine the users logged in status and either direct to MainActivity if the user is logged in or LoginActivity if he/she isn't.
+- './features/main' : The Main feature is the wrapper for the applications logged in state. The MainActivity displays the applications other main features as fragments inside its viewpager.
+- './data/room : The package for Room contains repositories, DAO:s and the RoomDatabase that the application uses to cache data.
 
 ## Authors
 
