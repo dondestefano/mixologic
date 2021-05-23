@@ -4,7 +4,7 @@ Mixologic - An application for sharing and creating drink recipes.
 
 ## Description
 
-The application is built with Kotlin(1.4.31) and using Firebase(8.4.3).
+The application is built with Kotlin(1.4.31), using Firebase(22.1.1) for database handling and Room(2.3.0) for cache storage.
 
 Full list of dependencies and packages used can be found in './app/build.gradle'.
 
