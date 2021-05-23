@@ -36,11 +36,11 @@ class LoginViewModel: ViewModel() {
                 if (value != null) {
                     val data = value.toObject(UserData::class.java)!!
                     AccountManager.setUserData(data)
+                    LiquorManager.fetchLiquors()
+                    LiquorManager.fetchUnits()
                     LiquorManager.fetchPantry()
                     loginState.value = LoginState.SUCCESS
                 } else {
-                    Toast.makeText(context, "Error fetching userdata: $error", Toast.LENGTH_SHORT)
-                        .show()
                     loginState.value = LoginState.ERROR
                 }
             }

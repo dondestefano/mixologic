@@ -1,5 +1,7 @@
 package com.example.mixologic.features.search
 
+import android.util.Base64
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -8,6 +10,7 @@ import com.example.mixologic.R
 import com.example.mixologic.application.MixologicApplication
 import com.example.mixologic.data.*
 import com.example.mixologic.managers.AccountManager
+import com.example.mixologic.managers.EncryptionManager
 import com.example.mixologic.managers.FirebaseManager
 import com.example.mixologic.managers.LikeManager
 import com.squareup.picasso.Picasso
@@ -73,7 +76,7 @@ fun getUserName(view: TextView, id: String?) {
             view.text = AccountManager.getUsername()
         } else {
             if (cachedData != null) {
-                view.text = cachedData.profileName
+                view.text = decryptName(cachedData)
             } else {
                 FirebaseManager.getUsersUserData(id)
                         .document("info")
@@ -82,8 +85,17 @@ fun getUserName(view: TextView, id: String?) {
                                 val userData = value.toObject(UserData::class.java) ?: AccountManager.getDefaultData()
                                 view.text = userData.name
 
+                                val encryption = userData.name?.toByteArray()?.let { EncryptionManager.encrypt(it, "hej".toCharArray()) }
+                                val dataToCache = CachedData(
+                                    id,
+                                    Base64.encodeToString(encryption?.get("encrypted"), Base64.NO_WRAP),
+                                    userData.profileImageURL,
+                                    Base64.encodeToString(encryption?.get("salt"), Base64.NO_WRAP),
+                                    Base64.encodeToString(encryption?.get("iv"), Base64.NO_WRAP),
+                                )
+
                                 GlobalScope.launch {
-                                    val dataToCache = CachedData(id, userData.name, userData.profileImageURL)
+                                    Log.d("!!!", "Saving")
                                     application.dataRepository.saveDataToCache(dataToCache)
                                 }
                             }
@@ -112,8 +124,16 @@ fun getUserProfileImage(view: CircleImageView, id: String?) {
                                 val userData = value.toObject(UserData::class.java) ?: AccountManager.getDefaultData()
                                 bindCircleImageFromUrl(view, userData.profileImageURL)
 
+                                val encryption = userData.name?.toByteArray()?.let { EncryptionManager.encrypt(it, "hej".toCharArray()) }
+                                val dataToCache = CachedData(
+                                    id,
+                                    Base64.encodeToString(encryption?.get("encrypted"), Base64.NO_WRAP),
+                                    userData.profileImageURL,
+                                    Base64.encodeToString(encryption?.get("salt"), Base64.NO_WRAP),
+                                    Base64.encodeToString(encryption?.get("iv"), Base64.NO_WRAP),
+                                )
+
                                 GlobalScope.launch {
-                                    val dataToCache = CachedData(id, userData.name, userData.profileImageURL)
                                     application.dataRepository.saveDataToCache(dataToCache)
                                 }
                             }
@@ -121,6 +141,18 @@ fun getUserProfileImage(view: CircleImageView, id: String?) {
             }
         }
     }
+}
+
+fun decryptName(cachedData: CachedData): String {
+    val encrypted = Base64.decode(cachedData.profileName, Base64.NO_WRAP)
+    val salt = Base64.decode(cachedData.salt, Base64.NO_WRAP)
+
+    val iv = Base64.decode(cachedData.iv, Base64.NO_WRAP)
+
+    val decrypted = EncryptionManager.decrypt(
+            hashMapOf("iv" to iv, "salt" to salt, "encrypted" to encrypted), "hej".toCharArray())
+
+    return decrypted?.let { String(it, Charsets.UTF_8) } ?: "Error"
 }
 
 @BindingAdapter("getLikes")

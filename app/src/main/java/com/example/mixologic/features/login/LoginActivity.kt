@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.mixologic.R
 import com.example.mixologic.features.main.MainActivity
+import com.example.mixologic.features.signup.SignupActivity
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
@@ -63,11 +64,12 @@ class LoginActivity : AppCompatActivity() {
     private fun startSignupActivity() {
         val intent = Intent(this, SignupActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_left, R.anim.stay)
     }
 
     private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.fade_in, R.anim.stay)
     }
-
 }

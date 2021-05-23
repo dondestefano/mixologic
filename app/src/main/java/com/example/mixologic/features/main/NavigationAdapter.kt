@@ -9,7 +9,7 @@ import com.example.mixologic.features.pantry.PantryFragment
 import com.example.mixologic.features.profile.ProfileFragment
 import com.example.mixologic.features.search.SearchFragment
 
-class NavigationViewPager(fragmentManager: FragmentManager, behaviour: Int): FragmentStatePagerAdapter(fragmentManager, behaviour) {
+class NavigationAdapter(fragmentManager: FragmentManager, behaviour: Int): FragmentStatePagerAdapter(fragmentManager, behaviour) {
 
     override fun getCount() = 5
 

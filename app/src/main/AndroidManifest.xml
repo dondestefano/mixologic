@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Mixologic">
         <activity android:name=".features.settings.SettingsActivity"></activity>
         <activity android:name=".features.recipe.RecipeActivity" />
-        <activity android:name=".features.login.SplashActivity">
+        <activity android:name=".features.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".features.login.LoginActivity" />
-        <activity android:name=".features.login.SignupActivity" />
+        <activity android:name=".features.signup.SignupActivity" />
     </application>
 
 </manifest>

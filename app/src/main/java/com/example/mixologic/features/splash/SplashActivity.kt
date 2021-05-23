@@ -1,4 +1,4 @@
-package com.example.mixologic.features.login
+package com.example.mixologic.features.splash
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.mixologic.R
+import com.example.mixologic.features.login.LoginActivity
 import com.example.mixologic.features.main.MainActivity
 import com.example.mixologic.managers.AccountManager
 import com.example.mixologic.managers.LiquorManager
@@ -23,12 +24,13 @@ class SplashActivity : AppCompatActivity() {
         notLoggedInIntent = Intent(this, LoginActivity::class.java)
 
         observeViewModel()
-        LiquorManager.fetchLiquors()
 
         if (AccountManager.getAuth().currentUser == null) {
             startActivity(notLoggedInIntent)
             finish()
         } else {
+            LiquorManager.fetchLiquors()
+            LiquorManager.fetchUnits()
             AccountManager.setUser()
             splashViewModel.fetchUserData(this)
         }
@@ -39,11 +41,13 @@ class SplashActivity : AppCompatActivity() {
             when (it) {
                 FetchState.SUCCESS -> {
                     startActivity(loggedInIntent)
+                    overridePendingTransition(R.anim.fade_in, R.anim.stay)
                     finish()
                 }
                 FetchState.ERROR -> {
                     AccountManager.getAuth().signOut()
                     startActivity(notLoggedInIntent)
+                    overridePendingTransition(R.anim.fade_in, R.anim.stay)
                     finish()
                 }
                 else -> {}

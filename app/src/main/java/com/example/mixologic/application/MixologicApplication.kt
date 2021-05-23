@@ -6,16 +6,17 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
+import com.example.mixologic.data.room.CacheDatabase
 import com.example.mixologic.data.room.DataRepository
 import com.example.mixologic.data.room.FavouriteRepository
-import com.example.mixologic.data.room.RecipeCacheDatabase
 import com.example.mixologic.managers.LikeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
 class MixologicApplication: Application() {
     private val applicationScope = CoroutineScope(SupervisorJob())
-    private val database by lazy { RecipeCacheDatabase.getInstance(this, applicationScope) }
+    private val database by lazy { CacheDatabase.getInstance(this, applicationScope) }
 
     val favouriteRepository by lazy { FavouriteRepository(database.recipeCacheDao) }
     val dataRepository by lazy { DataRepository(database.dataCacheDao) }
@@ -26,6 +27,7 @@ class MixologicApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         registerNetworkCallback(applicationContext)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         LikeManager.application = this
     }

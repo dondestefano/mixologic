@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
         navigationViewPager.offscreenPageLimit = 5
-        navigationViewPager.adapter = NavigationViewPager(
+        navigationViewPager.adapter = NavigationAdapter(
             supportFragmentManager,
             FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         )

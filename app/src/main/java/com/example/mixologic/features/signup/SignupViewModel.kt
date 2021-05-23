@@ -1,4 +1,4 @@
-package com.example.mixologic.features.login
+package com.example.mixologic.features.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +17,9 @@ class SignupViewModel: ViewModel() {
     fun signUp(username: String, email: String, password: String) {
         if (username == "") {
             signupState.value = SignupState.NO_USERNAME
+        }
+        else if (email == "" || password == "") {
+            signupState.value = SignupState.ERROR
         } else {
             AccountManager.getAuth().createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
